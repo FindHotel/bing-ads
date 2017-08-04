@@ -98,10 +98,11 @@ module Bing
             end
 
             def get_ads_by_ids(ad_group_id, ad_ids)
+              # Order matters
               payload = {
                 ad_group_id: ad_group_id,
-                ad_types: all_ad_types,
-                ad_ids: { 'ins1:long' => ad_ids }
+                ad_ids: { 'ins1:long' => ad_ids },
+                ad_types: all_ad_types
               }
               response = call(:get_ads_by_ids, payload)
               response_body = response_body(response, __method__)
