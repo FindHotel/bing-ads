@@ -176,13 +176,15 @@ module Bing
             end
 
             def all_ad_types
-              [
-                { ad_type: Bing::Ads::API::V11.config.campaign_management.ad_types.text },
-                { ad_type: Bing::Ads::API::V11.config.campaign_management.ad_types.expanded_text },
-                { ad_type: Bing::Ads::API::V11.config.campaign_management.ad_types.image },
-                { ad_type: Bing::Ads::API::V11.config.campaign_management.ad_types.product },
-                { ad_type: Bing::Ads::API::V11.config.campaign_management.ad_types.app_install },
-              ]
+              {
+                ad_type: [
+                  Bing::Ads::API::V11.config.campaign_management.ad_types.text,
+                  Bing::Ads::API::V11.config.campaign_management.ad_types.expanded_text,
+                  Bing::Ads::API::V11.config.campaign_management.ad_types.image,
+                  Bing::Ads::API::V11.config.campaign_management.ad_types.product,
+                  Bing::Ads::API::V11.config.campaign_management.ad_types.app_install
+                ]
+              }
             end
           end
         end
