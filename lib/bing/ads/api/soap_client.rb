@@ -5,6 +5,7 @@ module Bing
       class SOAPClient
         attr_accessor :customer_id, :account_id, :developer_token, :wsdl_url, :client_settings
         attr_accessor :authentication_token, :username, :password, :namespace_identifier
+        attr_accessor :savon_client
 
         def initialize(options)
           @customer_id            = options[:customer_id]
@@ -23,6 +24,7 @@ module Bing
         end
 
         def client(settings)
+          return savon_client if savon_client
           settings = {
             convert_request_keys_to: :camelcase,
             wsdl: wsdl_url,
@@ -33,7 +35,7 @@ module Bing
             pretty_print_xml: true
           }
           settings.merge!(client_settings) if client_settings
-          Savon.client(settings)
+          @savon_client = Savon.client(settings)
         end
 
         private
