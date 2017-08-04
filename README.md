@@ -112,18 +112,18 @@ response = service.get_ad_groups_by_ids(campaign_id, ad_group_ids)
 campaign_id = 813721838
 ad_groups = [
   {
-    status: Bing::Ads::API::V11.config.campaign_management.ad_group_status.paused,
-    ad_rotation: Bing::Ads::API::V11.config.campaign_management.ad_rotation.optimize_for_clicks, # optional
     ad_distribution: Bing::Ads::API::V11.config.campaign_management.ad_distribution.search, # required
-    bidding_scheme: Bing::Ads::API::V11.config.campaign_management.inherit_from_parent, # optional
+    ad_rotation: Bing::Ads::API::V11.config.campaign_management.ad_rotation.optimize_for_clicks, # optional
+    bidding_scheme: Bing::Ads::API::V11.config.campaign_management.bidding_scheme.inherit_from_parent, # optional
     content_match_bid: 100, # optional
+    end_date: '31/12/2020',
+    status: Bing::Ads::API::V11.config.campaign_management.ad_group_status.paused,
     language: Bing::Ads::API::V11.config.languages.english,
     name: 'H=WHotelAmsterdam&AG=1723812002',
     native_bid_adjustment: -50, # optional (-100 to 900)
     remarketing_targeting_setting: Bing::Ads::API::V11.config.campaign_management.remarketing_target_setting.bid_only, # optional
     search_bid: 100, # optional
     start_date: '5/7/2017',
-    end_date: '31/12/2020'
   },
   # ...
   # https://msdn.microsoft.com/en-us/library/bing-ads-campaign-management-adgroup.aspx
