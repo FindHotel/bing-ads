@@ -1,0 +1,66 @@
+ad_distribution:
+  search: Search
+  content: Content
+ad_rotation:
+  optimize_for_clicks: OptimizeForClicks
+  rotate_ads_evenly: RotateAdsEvenly
+ad_group_status:
+  draft: Draft
+  active: Active
+  paused: Paused
+  deleted: Deleted
+ad_editorial_status:
+  active: Active
+  disapproved: Disapproved
+  inactive: Inactive
+  active_limited: ActiveLimited
+ad_status:
+  inactive: Inactive
+  active: Active
+  paused: Paused
+  deleted: Deleted
+ad_type:
+  text: Text
+  image: Image
+  mobile: Mobile
+  rich_search: RichSearch
+  product: Product
+bidding_model:
+  keyword: Keyword
+  site_placement: SitePlacement
+bidding_scheme:
+  inherit_from_parent: InheritFromParentBiddingScheme
+  manual_cpc: ManualCpcBiddingScheme
+budget_limit_type:
+  daily_budget_accelerated: DailyBudgetAccelerated
+  daily_budget_standard: DailyBudgetStandard
+campaign_status:
+  active: Active
+  paused: Paused
+  budget_paused: BudgetPaused
+  budget_and_manual_paused: BudgetAndManualPaused
+  deleted: Deleted
+pricing_model:
+  cpc: Cpc
+  cpm: Cpm
+keyword_editorial_statuses:
+  active: Active
+  disapproved: Disapproved
+  inactive: Inactive
+keyword_statuses:
+  active: Active
+  paused: Paused
+  deleted: Deleted
+  inactive: Inactive
+match_types:
+  broad: Broad
+  content: Content
+  exact: Exact
+  phrase: Phrase
+network:
+  owned_and_operated_and_syndicated_search: OwnedAndOperatedAndSyndicatedSearch
+  owned_and_operated_only: OwnedAndOperatedOnly
+  syndicated_search_only: SyndicatedSearchOnly
+remarketing_target_setting:
+  bid_only: BidOnly
+  target_and_bid: TargetAndBid

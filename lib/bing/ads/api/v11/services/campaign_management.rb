@@ -1,0 +1,177 @@
+module Bing
+  module Ads
+    module API
+      module V11
+        module Services
+          # Bing::Ads::API::V11::Services::CampaignManagement
+          class CampaignManagement < Base
+            def initialize(options = {})
+              super(options)
+            end
+
+            def get_campaigns_by_account_id(account_id=nil)
+              account_id ||= @account_id
+              response = call(:get_campaigns_by_account_id, account_id: account_id)
+              response_body = response_body(response, __method__)
+              [response_body[:campaigns][:campaign]].flatten.compact
+            end
+
+            def add_campaigns(account_id, campaigns)
+              campaigns = campaigns.map { |campaign| Bing::Ads::Utils.camelcase_keys(campaign) }
+              payload = {
+                account_id: account_id,
+                campaigns: { campaign: campaigns }
+              }
+              response = call(:add_campaigns, payload)
+              response_body(response, __method__)
+            end
+
+            def update_campaigns(account_id, campaigns)
+              campaigns = campaigns.map { |campaign| Bing::Ads::Utils.camelcase_keys(campaign) }
+              payload = {
+                account_id: account_id,
+                campaigns: { campaign: campaigns }
+              }
+              response = call(:update_campaigns, payload)
+              response_body(response, __method__)
+            end
+
+            def delete_campaigns(account_id, campaign_ids)
+              payload = {
+                account_id: account_id,
+                campaign_ids: { 'a1:long' => campaign_ids }
+              }
+              response = call(:delete_campaigns, payload)
+              response_body(response, __method__)
+            end
+
+            def get_ad_groups_by_campaign_id(campaign_id)
+              response = call(:get_ad_groups_by_campaign_id,
+                              campaign_id: campaign_id)
+              response_body = response_body(response, __method__)
+              [response_body[:ad_groups][:ad_group]].flatten.compact
+            end
+
+            def get_ad_groups_by_ids(campaign_id, ad_groups_ids)
+              payload = {
+                campaign_id: campaign_id,
+                ad_group_ids: { 'a1:long' => ad_groups_ids }
+              }
+              response = call(:get_ad_groups_by_ids, payload)
+              response_body = response_body(response, __method__)
+              [response_body[:ad_groups][:ad_group]].flatten
+            end
+
+            def add_ad_groups(campaign_id, ad_groups)
+              ad_groups = ad_groups.map { |ad_group| Bing::Ads::Utils.camelcase_keys(ad_group) }
+              payload = {
+                campaign_id: campaign_id,
+                ad_groups: { ad_group: ad_groups }
+              }
+              response = call(:add_ad_groups, payload)
+              response_body(response, __method__)
+            end
+
+            def update_ad_groups(campaign_id, ad_groups)
+              ad_groups = ad_groups.map { |ad_group| Bing::Ads::Utils.camelcase_keys(ad_group) }
+              payload = {
+                campaign_id: campaign_id,
+                ad_groups: { ad_group: ad_groups }
+              }
+              response = call(:update_ad_groups, payload)
+              response_body(response, __method__)
+            end
+
+            def get_ads_by_ad_group_id(ad_group_id)
+              response = call(:get_ads_by_ad_group_id, ad_group_id: ad_group_id)
+              response_body = response_body(response, __method__)
+              response_ads = [response_body[:ads][:ad]].flatten.compact
+              response_ads.each_with_object({}) do |ad, obj|
+                type = ad['@i:type'.to_sym]
+                obj[type] ||= []
+                obj[type] << ad
+              end
+            end
+
+            def get_ads_by_ids(ad_group_id, ad_ids)
+              payload = {
+                ad_group_id: ad_group_id,
+                ad_ids: { 'a1:long' => ad_ids }
+              }
+              response = call(:get_ads_by_ids, payload)
+              response_body = response_body(response, __method__)
+              response_ads = [response_body[:ads][:ad]].flatten
+              response_ads.each_with_object({}) do |ad, obj|
+                type = ad['@i:type'.to_sym]
+                obj[type] ||= []
+                obj[type] << ad
+              end
+            end
+
+            def add_ads(ad_group_id, ads)
+              ads = ads.map { |ad| Bing::Ads::Utils.camelcase_keys(ad) }
+              payload = {
+                ad_group_id: ad_group_id,
+                ads: { ad: ads }
+              }
+              response = call(:add_ads, payload)
+              response_body(response, __method__)
+            end
+
+            def update_ads(ad_group_id, ads)
+              ads = ads.map { |ad| Bing::Ads::Utils.camelcase_keys(ad) }
+              payload = {
+                ad_group_id: ad_group_id,
+                ads: { ad: ads }
+              }
+              response = call(:update_ads, payload)
+              response_body(response, __method__)
+            end
+
+            def get_keywords_by_ad_group_id(ad_group_id)
+              response = call(:get_keywords_by_ad_group_id, ad_group_id: ad_group_id)
+              response_body = response_body(response, __method__)
+              [response_body[:keywords][:keyword]].flatten.compact
+            end
+
+            def get_keywords_by_ids(ad_group_id, keyword_ids)
+              payload = {
+                ad_group_id: ad_group_id,
+                keyword_ids: { 'a1:long' => keyword_ids }
+              }
+              response = call(:get_keywords_by_ids, payload)
+              response_body = response_body(response, __method__)
+              [response_body[:keywords][:keyword]].flatten
+            end
+
+            def add_keywords(ad_group_id, keywords)
+              keywords = keywords.map { |keyword| Bing::Ads::Utils.camelcase_keys(keyword) }
+              payload = {
+                ad_group_id: ad_group_id,
+                keywords: { keyword: keywords }
+              }
+              response = call(:add_keywords, payload)
+              response_body(response, __method__)
+            end
+
+            def update_keywords(ad_group_id, keywords)
+              keywords = keywords.map { |keyword| Bing::Ads::Utils.camelcase_keys(keyword) }
+              payload = {
+                ad_group_id: ad_group_id,
+                keywords: { keyword: keywords }
+              }
+              response = call(:update_keywords, payload)
+              response_body(response, __method__)
+            end
+
+            private
+
+            def service_name
+              'campaign_management'
+            end
+          end
+        end
+      end
+    end
+  end
+end

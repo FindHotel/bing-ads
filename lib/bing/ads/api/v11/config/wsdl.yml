@@ -1,0 +1,6 @@
+sandbox:
+  campaign_management: "https://campaign.api.sandbox.bingads.microsoft.com/Api/Advertiser/CampaignManagement/V11/CampaignManagementService.svc?singleWsdl"
+  reporting: "https://api.sandbox.bingads.microsoft.com/Api/Advertiser/Reporting/V11/ReportingService.svc?singleWsdl"
+production:
+  campaign_management: "https://campaign.api.bingads.microsoft.com/Api/Advertiser/CampaignManagement/V11/CampaignManagementService.svc?singleWsdl"
+  reporting: "https://api.bingads.microsoft.com/Api/Advertiser/Reporting/V11/ReportingService.svc?singleWsdl"
