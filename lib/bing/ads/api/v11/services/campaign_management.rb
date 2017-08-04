@@ -63,7 +63,7 @@ module Bing
             end
 
             def add_ad_groups(campaign_id, ad_groups)
-              ad_groups = ad_groups.map { |ad_group| Bing::Ads::Utils.camelcase_keys(ad_group) }
+              ad_groups = ad_groups.map { |ad_group| prepare_ad_group(ad_group) }
               payload = {
                 campaign_id: campaign_id,
                 ad_groups: { ad_group: ad_groups }
@@ -73,7 +73,7 @@ module Bing
             end
 
             def update_ad_groups(campaign_id, ad_groups)
-              ad_groups = ad_groups.map { |ad_group| Bing::Ads::Utils.camelcase_keys(ad_group) }
+              ad_groups = ad_groups.map { |ad_group| prepare_ad_group(ad_group) }
               payload = {
                 campaign_id: campaign_id,
                 ad_groups: { ad_group: ad_groups }
@@ -174,6 +174,13 @@ module Bing
 
             def service_name
               'campaign_management'
+            end
+
+            def prepare_ad_group(ad_group)
+              ad_group = Hash[ ad_group.sort_by { |key, val| key.to_s } ]
+              ad_group.symbolize_keys!
+              ad_group[:ad_rotation] = { type: ad_group[:ad_rotation] } if ad_group[:ad_rotation]
+              Bing::Ads::Utils.camelcase_keys(ad_group)
             end
 
             def all_ad_types
