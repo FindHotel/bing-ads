@@ -19,12 +19,13 @@ ad_status:
   active: Active
   paused: Paused
   deleted: Deleted
-ad_type:
+ad_types:
   text: Text
   image: Image
-  mobile: Mobile
-  rich_search: RichSearch
   product: Product
+  app_install: AppInstall
+  expanded_text: ExpandedText
+  dynamic_search: DynamicSearch
 bidding_model:
   keyword: Keyword
   site_placement: SitePlacement

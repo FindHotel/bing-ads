@@ -39,7 +39,7 @@ module Bing
             def delete_campaigns(account_id, campaign_ids)
               payload = {
                 account_id: account_id,
-                campaign_ids: { 'a1:long' => campaign_ids }
+                campaign_ids: { 'ins1:long' => campaign_ids }
               }
               response = call(:delete_campaigns, payload)
               response_body(response, __method__)
@@ -55,7 +55,7 @@ module Bing
             def get_ad_groups_by_ids(campaign_id, ad_groups_ids)
               payload = {
                 campaign_id: campaign_id,
-                ad_group_ids: { 'a1:long' => ad_groups_ids }
+                ad_group_ids: { 'ins1:long' => ad_groups_ids }
               }
               response = call(:get_ad_groups_by_ids, payload)
               response_body = response_body(response, __method__)
@@ -83,7 +83,11 @@ module Bing
             end
 
             def get_ads_by_ad_group_id(ad_group_id)
-              response = call(:get_ads_by_ad_group_id, ad_group_id: ad_group_id)
+              payload = {
+                ad_group_id: ad_group_id,
+                ad_types: all_ad_types
+              }
+              response = call(:get_ads_by_ad_group_id, payload)
               response_body = response_body(response, __method__)
               response_ads = [response_body[:ads][:ad]].flatten.compact
               response_ads.each_with_object({}) do |ad, obj|
@@ -96,7 +100,8 @@ module Bing
             def get_ads_by_ids(ad_group_id, ad_ids)
               payload = {
                 ad_group_id: ad_group_id,
-                ad_ids: { 'a1:long' => ad_ids }
+                ad_types: all_ad_types,
+                ad_ids: { 'ins1:long' => ad_ids }
               }
               response = call(:get_ads_by_ids, payload)
               response_body = response_body(response, __method__)
@@ -137,7 +142,7 @@ module Bing
             def get_keywords_by_ids(ad_group_id, keyword_ids)
               payload = {
                 ad_group_id: ad_group_id,
-                keyword_ids: { 'a1:long' => keyword_ids }
+                keyword_ids: { 'ins1:long' => keyword_ids }
               }
               response = call(:get_keywords_by_ids, payload)
               response_body = response_body(response, __method__)
@@ -168,6 +173,16 @@ module Bing
 
             def service_name
               'campaign_management'
+            end
+
+            def all_ad_types
+              [
+                { ad_type: Bing::Ads::API::V11.config.campaign_management.ad_types.text },
+                { ad_type: Bing::Ads::API::V11.config.campaign_management.ad_types.expanded_text },
+                { ad_type: Bing::Ads::API::V11.config.campaign_management.ad_types.image },
+                { ad_type: Bing::Ads::API::V11.config.campaign_management.ad_types.product },
+                { ad_type: Bing::Ads::API::V11.config.campaign_management.ad_types.app_install },
+              ]
             end
           end
         end
