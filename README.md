@@ -23,6 +23,9 @@ Or install it yourself as:
 ### Campaign Management Service
 #### Initialization
 ```ruby
+# Authentication token is not supported in sandbox, use `username` and `password` instead
+# https://msdn.microsoft.com/en-us/library/dn277356.aspx
+
 options = {
   environment: :sandbox,
   authentication_token: '39b290146bea6ce975c37cfc23',
