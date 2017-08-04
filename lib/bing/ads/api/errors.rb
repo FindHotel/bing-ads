@@ -4,6 +4,8 @@ module Bing
       module Errors
         # Bing::Ads::API::Errors::AuthenticationParamsMissing
         class AuthenticationParamsMissing < RuntimeError; end;
+        # Bing::Ads::API::Errors::AuthenticationTokenExpired
+        class AuthenticationTokenExpired < RuntimeError; end;
       end
     end
   end

@@ -51,9 +51,9 @@ module Bing
               rescue Savon::SOAPFault => error
                 fault_detail = error.to_hash[:fault][:detail]
                 if fault_detail.key?(:api_fault_detail)
-                  raise "SOAP error while calling #{operation}, #{fault_detail[:api_fault_detail]}"
+                  handle_soap_fault(operation, fault_detail, :api_fault_detail)
                 elsif fault_detail.key?(:ad_api_fault_detail)
-                  raise "SOAP error while calling #{operation}, #{fault_detail[:ad_api_fault_detail]}"
+                  handle_soap_fault(operation, fault_detail, :ad_api_fault_detail)
                 else
                   raise
                 end
@@ -101,6 +101,17 @@ module Bing
             # @return String with the Service url
             def service_wsdl_url
               Bing::Ads::API::V11.config.wsdl.send(environment).send(service_name)
+            end
+
+            def handle_soap_fault(operation, fault_detail, key)
+              if fault_detail[key][:errors] &&
+                 fault_detail[key][:errors][:ad_api_error] &&
+                 fault_detail[key][:errors][:ad_api_error][:error_code] == 'AuthenticationTokenExpired'
+                raise Bing::Ads::API::Errors::AuthenticationTokenExpired,
+                      'renew authentication token or obtain a new one.'
+              else
+                raise "SOAP error while calling #{operation}, #{fault_detail[key]}"
+              end
             end
           end
         end
