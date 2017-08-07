@@ -17,7 +17,8 @@ module Bing
             end
 
             def add_campaigns(account_id, campaigns)
-              campaigns = campaigns.map { |campaign| Bing::Ads::Utils.camelcase_keys(campaign) }
+              validate_limits!(:campaign, :add, campaigns)
+              campaigns = campaigns.map { |campaign| prepare_campaign(campaign) }
               payload = {
                 account_id: account_id,
                 campaigns: { campaign: campaigns }
@@ -27,7 +28,8 @@ module Bing
             end
 
             def update_campaigns(account_id, campaigns)
-              campaigns = campaigns.map { |campaign| Bing::Ads::Utils.camelcase_keys(campaign) }
+              validate_limits!(:campaign, :update, campaigns)
+              campaigns = campaigns.map { |campaign| prepare_campaign(campaign) }
               payload = {
                 account_id: account_id,
                 campaigns: { campaign: campaigns }
@@ -63,6 +65,7 @@ module Bing
             end
 
             def add_ad_groups(campaign_id, ad_groups)
+              validate_limits!(:ad_group, :add, ad_groups)
               ad_groups = ad_groups.map { |ad_group| prepare_ad_group(ad_group) }
               payload = {
                 campaign_id: campaign_id,
@@ -73,6 +76,7 @@ module Bing
             end
 
             def update_ad_groups(campaign_id, ad_groups)
+              validate_limits!(:ad_group, :update, ad_groups)
               ad_groups = ad_groups.map { |ad_group| prepare_ad_group(ad_group) }
               payload = {
                 campaign_id: campaign_id,
@@ -115,7 +119,8 @@ module Bing
             end
 
             def add_ads(ad_group_id, ads)
-              ads = ads.map { |ad| Bing::Ads::Utils.camelcase_keys(ad) }
+              validate_limits!(:ad, :add, ads)
+              ads = ads.map { |ad| prepare_ad(ad) }
               payload = {
                 ad_group_id: ad_group_id,
                 ads: { ad: ads }
@@ -125,7 +130,8 @@ module Bing
             end
 
             def update_ads(ad_group_id, ads)
-              ads = ads.map { |ad| Bing::Ads::Utils.camelcase_keys(ad) }
+              validate_limits!(:ad, :update, ads)
+              ads = ads.map { |ad| prepare_ad(ad) }
               payload = {
                 ad_group_id: ad_group_id,
                 ads: { ad: ads }
@@ -151,6 +157,7 @@ module Bing
             end
 
             def add_keywords(ad_group_id, keywords)
+              validate_limits!(:keyword, :add, keywords)
               keywords = keywords.map { |keyword| Bing::Ads::Utils.camelcase_keys(keyword) }
               payload = {
                 ad_group_id: ad_group_id,
@@ -161,6 +168,7 @@ module Bing
             end
 
             def update_keywords(ad_group_id, keywords)
+              validate_limits!(:keyword, :update, keywords)
               keywords = keywords.map { |keyword| Bing::Ads::Utils.camelcase_keys(keyword) }
               payload = {
                 ad_group_id: ad_group_id,
@@ -176,6 +184,15 @@ module Bing
               'campaign_management'
             end
 
+            def prepare_campaign(campaign)
+              campaign = Bing::Ads::Utils.sort_keys(campaign)
+              campaign[:bidding_scheme] = { type: campaign[:bidding_scheme] } if campaign[:bidding_scheme]
+              campaign[:languages] = { 'ins1:string' => campaign[:languages] } if campaign[:languages]
+              # TODO UrlCustomParameters
+              # TODO Settings
+              Bing::Ads::Utils.camelcase_keys(campaign)
+            end
+
             def prepare_ad_group(ad_group)
               ad_group = Bing::Ads::Utils.sort_keys(ad_group)
               ad_group[:ad_rotation] = { type: ad_group[:ad_rotation] } if ad_group[:ad_rotation]
@@ -188,19 +205,35 @@ module Bing
               Bing::Ads::Utils.camelcase_keys(ad_group)
             end
 
+            def prepare_ad(ad)
+              ad = Bing::Ads::Utils.sort_keys(ad)
+              ad['@xsi:type'] = "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{ad[:type]}"
+              ad[:final_mobile_urls] = { 'ins1:string' => ad[:final_mobile_urls] } if ad[:final_mobile_urls]
+              ad[:final_urls] = { 'ins1:string' => ad[:final_urls] } if ad[:final_urls]
+              # TODO FinalAppUrls
+              Bing::Ads::Utils.camelcase_keys(ad)
+            end
+
             def date_hash(date)
               date = Date.parse(date) if date.is_a?(String)
               { day: date.day, month: date.month, year: date.year }
             end
 
+            def validate_limits!(type, operation, array)
+              limit = Bing::Ads::API::V11.constants.limits.per_call.send(type)
+              if array.size > limit
+                raise Bing::Ads::API::Errors::LimitError.new(operation, limit, type)
+              end
+            end
+
             def all_ad_types
               {
                 ad_type: [
-                  Bing::Ads::API::V11.config.campaign_management.ad_types.text,
-                  Bing::Ads::API::V11.config.campaign_management.ad_types.expanded_text,
-                  Bing::Ads::API::V11.config.campaign_management.ad_types.image,
-                  Bing::Ads::API::V11.config.campaign_management.ad_types.product,
-                  Bing::Ads::API::V11.config.campaign_management.ad_types.app_install
+                  Bing::Ads::API::V11.constants.campaign_management.ad_types_for_get.text,
+                  Bing::Ads::API::V11.constants.campaign_management.ad_types_for_get.expanded_text,
+                  Bing::Ads::API::V11.constants.campaign_management.ad_types_for_get.image,
+                  Bing::Ads::API::V11.constants.campaign_management.ad_types_for_get.product,
+                  Bing::Ads::API::V11.constants.campaign_management.ad_types_for_get.app_install
                 ]
               }
             end

@@ -100,7 +100,7 @@ module Bing
             #
             # @return String with the Service url
             def service_wsdl_url
-              Bing::Ads::API::V11.config.wsdl.send(environment).send(service_name)
+              Bing::Ads::API::V11.constants.wsdl.send(environment).send(service_name)
             end
 
             def handle_soap_fault(operation, fault_detail, key)
