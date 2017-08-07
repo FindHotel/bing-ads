@@ -1,3 +1,5 @@
+[![Gem Version](https://img.shields.io/gem/v/bing-ads.svg)](https://rubygems.org/gems/bing-ads)
+
 # Bing::Ads
 
 A Ruby client for Bing Ads API that includes a proxy to all Bing Ads API web services and abstracts low level details of authentication with OAuth.
