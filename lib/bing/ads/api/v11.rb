@@ -5,7 +5,7 @@ module Bing
       module V11
         NAMESPACE_IDENTIFIER = :v11
 
-        def self.config
+        def self.constants
           Persey.config
         end
       end

@@ -20,6 +20,13 @@ ad_status:
   paused: Paused
   deleted: Deleted
 ad_types:
+  text_ad: TextAd
+  image_ad: ImageAd
+  product_ad: ProductAd
+  app_install_ad: AppInstallAd
+  expanded_text_ad: ExpandedTextAd
+  dynamic_search_ad: DynamicSearchAd
+ad_types_for_get:
   text: Text
   image: Image
   product: Product
