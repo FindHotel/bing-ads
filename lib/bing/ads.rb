@@ -1,6 +1,7 @@
 require 'active_support/core_ext/string/inflections'
 require 'active_support/core_ext/hash'
 require 'active_support/hash_with_indifferent_access'
+require 'date'
 require 'persey'
 require 'savon'
 
