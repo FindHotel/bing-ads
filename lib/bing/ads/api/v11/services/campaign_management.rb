@@ -177,8 +177,7 @@ module Bing
             end
 
             def prepare_ad_group(ad_group)
-              ad_group = Hash[ ad_group.sort_by { |key, val| key.to_s } ]
-              ad_group.symbolize_keys!
+              ad_group = Bing::Ads::Utils.sort_keys(ad_group)
               ad_group[:ad_rotation] = { type: ad_group[:ad_rotation] } if ad_group[:ad_rotation]
               ad_group[:bidding_scheme] = { type: ad_group[:bidding_scheme] } if ad_group[:bidding_scheme]
               ad_group[:content_match_bid] = { amount: ad_group[:content_match_bid] } if ad_group[:content_match_bid]
