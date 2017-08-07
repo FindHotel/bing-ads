@@ -158,7 +158,7 @@ module Bing
 
             def add_keywords(ad_group_id, keywords)
               validate_limits!(:keyword, :add, keywords)
-              keywords = keywords.map { |keyword| Bing::Ads::Utils.camelcase_keys(keyword) }
+              keywords = keywords.map { |keyword| prepare_keyword(keyword) }
               payload = {
                 ad_group_id: ad_group_id,
                 keywords: { keyword: keywords }
@@ -169,7 +169,7 @@ module Bing
 
             def update_keywords(ad_group_id, keywords)
               validate_limits!(:keyword, :update, keywords)
-              keywords = keywords.map { |keyword| Bing::Ads::Utils.camelcase_keys(keyword) }
+              keywords = keywords.map { |keyword| prepare_keyword(keyword) }
               payload = {
                 ad_group_id: ad_group_id,
                 keywords: { keyword: keywords }
@@ -177,6 +177,92 @@ module Bing
               response = call(:update_keywords, payload)
               response_body(response, __method__)
             end
+
+            # TODO add_ad_extensions
+            # TODO add_ad_group_criterions
+            # TODO add_audiences
+            # TODO add_budgets
+            # TODO add_campaign_criterions
+            # TODO add_conversion_goals
+            # TODO add_labels
+            # TODO add_list_items_to_shared_list
+            # TODO add_media
+            # TODO add_negative_keywords_to_entities
+            # TODO add_shared_entity
+            # TODO add_uet_tags
+            # TODO appeal_editorial_rejections
+            # TODO apply_offline_conversions
+            # TODO apply_product_partition_actions
+            # TODO delete_ad_extensions
+            # TODO delete_ad_group_criterions
+            # TODO delete_ad_groups
+            # TODO delete_ads
+            # TODO delete_audiences
+            # TODO delete_budgets
+            # TODO delete_campaign_criterions
+            # TODO delete_conversion_goals
+            # TODO delete_keywords
+            # TODO delete_labels
+            # TODO delete_list_items_to_shared_list
+            # TODO delete_media
+            # TODO delete_negative_keywords_to_entities
+            # TODO delete_shared_entity
+            # TODO delete_shared_entity_associations
+            # TODO get_account_migration_statuses
+            # TODO get_account_properties
+            # TODO get_ad_extension_ids_by_account_id
+            # TODO get_ad_extensions_associations
+            # TODO get_ad_extensions_by_ids
+            # TODO get_ad_extensions_editorial_reasons
+            # TODO get_ad_group_criterions_by_ids
+            # TODO get_ads_by_editorial_status
+            # TODO get_audiences_by_ids
+            # TODO get_bmc_stores_by_customer_id
+            # TODO get_bsc_countries
+            # TODO get_budgets_by_ids
+            # TODO get_campaign_criterions_by_ids
+            # TODO get_campaign_ids_by_budget_ids
+            # TODO get_campaigns_by_ids
+            # TODO get_campaign_sizes_by_account_id
+            # TODO get_config_value
+            # TODO get_conversion_goals_by_ids
+            # TODO get_conversion_goals_by_tag_ids
+            # TODO get_editorial_reasons_by_ids
+            # TODO get_geo_locations_file_url
+            # TODO get_keywords_by_editorial_status
+            # TODO get_label_associations_by_entity_ids
+            # TODO get_label_associations_by_label_ids
+            # TODO get_labels_by_ids
+            # TODO get_list_items_by_shared_list
+            # TODO get_media_associations
+            # TODO get_media_by_ids
+            # TODO get_media_meta_data_by_account_id
+            # TODO get_media_meta_data_by_ids
+            # TODO get_negative_keywords_by_entity_ids
+            # TODO get_negative_sites_by_ad_group_ids
+            # TODO get_negative_sites_by_campaign_ids
+            # TODO get_shared_entities_by_account_id
+            # TODO get_shared_entity_associations_by_entity_ids
+            # TODO get_shared_entity_associations_by_shared_entity_ids
+            # TODO get_uet_tags_by_ids
+            # TODO set_account_properties
+            # TODO set_ad_extensions_associations
+            # TODO set_label_associations
+            # TODO set_negative_sites_to_ad_groups
+            # TODO set_negative_sites_to_campaigns
+            # TODO set_shared_entity_associations
+            # TODO update_ad_extensions
+            # TODO update_ad_group_criterions
+            # TODO update_audiences
+            # TODO update_budgets
+            # TODO update_campaign_criterions
+            # TODO update_conversion_goals
+            # TODO update_labels
+            # TODO update_list_items_to_shared_list
+            # TODO update_media
+            # TODO update_negative_keywords_to_entities
+            # TODO update_shared_entity
+            # TODO update_uet_tags
 
             private
 
@@ -186,7 +272,13 @@ module Bing
 
             def prepare_campaign(campaign)
               campaign = Bing::Ads::Utils.sort_keys(campaign)
-              campaign[:bidding_scheme] = { type: campaign[:bidding_scheme] } if campaign[:bidding_scheme]
+              if campaign[:bidding_scheme]
+                campaign[:bidding_scheme] = {
+                  # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
+                  type: campaign[:bidding_scheme],
+                  '@xsi:type' => "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{campaign[:bidding_scheme]}"
+                }
+              end
               campaign[:languages] = { 'ins1:string' => campaign[:languages] } if campaign[:languages]
               # TODO UrlCustomParameters
               # TODO Settings
@@ -196,7 +288,13 @@ module Bing
             def prepare_ad_group(ad_group)
               ad_group = Bing::Ads::Utils.sort_keys(ad_group)
               ad_group[:ad_rotation] = { type: ad_group[:ad_rotation] } if ad_group[:ad_rotation]
-              ad_group[:bidding_scheme] = { type: ad_group[:bidding_scheme] } if ad_group[:bidding_scheme]
+              if ad_group[:bidding_scheme]
+                # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
+                ad_group[:bidding_scheme] = {
+                  type: ad_group[:bidding_scheme],
+                  '@xsi:type' => "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{ad_group[:bidding_scheme]}"
+                }
+              end
               ad_group[:content_match_bid] = { amount: ad_group[:content_match_bid] } if ad_group[:content_match_bid]
               ad_group[:end_date] = date_hash(ad_group[:end_date]) if ad_group[:end_date]
               ad_group[:search_bid] = { amount: ad_group[:search_bid] } if ad_group[:search_bid]
@@ -212,6 +310,23 @@ module Bing
               ad[:final_urls] = { 'ins1:string' => ad[:final_urls] } if ad[:final_urls]
               # TODO FinalAppUrls
               Bing::Ads::Utils.camelcase_keys(ad)
+            end
+
+            def prepare_keyword(keyword)
+              keyword = Bing::Ads::Utils.sort_keys(keyword)
+              keyword[:bid] = { amount: keyword[:bid] } if keyword[:bid]
+              if keyword[:bidding_scheme]
+                # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
+                keyword[:bidding_scheme] = {
+                  type: keyword[:bidding_scheme],
+                  '@xsi:type' => "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{keyword[:bidding_scheme]}"
+                }
+              end
+              keyword[:final_mobile_urls] = { 'ins1:string' => keyword[:final_mobile_urls] } if keyword[:final_mobile_urls]
+              keyword[:final_urls] = { 'ins1:string' => keyword[:final_urls] } if keyword[:final_urls]
+              # TODO FinalAppUrls
+              # TODO UrlCustomParameters
+              Bing::Ads::Utils.camelcase_keys(keyword)
             end
 
             def date_hash(date)

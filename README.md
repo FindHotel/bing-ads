@@ -227,7 +227,7 @@ response = service.get_keywords_by_ids(ad_group_id, keyword_ids)
 ad_group_id = 9866221838
 keywords = [
   {
-    bidding_scheme: Bing::Ads::API::V11.constants.campaign_management.inherit_from_parent,
+    bidding_scheme: Bing::Ads::API::V11.constants.campaign_management.bidding_scheme.inherit_from_parent,
     bid: 5,
     # optional, ad final urls used if this is not set
     final_urls: [
@@ -239,6 +239,7 @@ keywords = [
   },
   # ...
   # https://msdn.microsoft.com/en-us/library/bing-ads-campaign-management-keyword.aspx
+  # https://msdn.microsoft.com/en-us/library/bing-ads-campaign-management-addkeywords.aspx
 ]
 
 # Returns IDs of keywords added to ad group
