@@ -1,4 +1,5 @@
 [![Gem Version](https://img.shields.io/gem/v/bing-ads.svg)](https://rubygems.org/gems/bing-ads)
+[![Build Status](https://travis-ci.org/FindHotel/bing-ads.svg?branch=master)](https://travis-ci.org/FindHotel/bing-ads)
 
 # Bing::Ads
 
@@ -40,7 +41,7 @@ options = {
 service = Bing::Ads::API::V11::Services::CampaignManagement.new(options)
 ```
 
-#### Getting campaigns in account
+#### Getting campaigns
 ```ruby
 account_id = 5278183
 response = service.get_campaigns_by_account_id(account_id)
@@ -94,20 +95,20 @@ response = service.delete_campaigns(account_id, campaign_ids_to_delete)
 
 ---
 
-#### Getting ad groups in campaign
+#### Getting ad groups in a campaign
 ```ruby
 campaign_id = 813721838
 response = service.get_ad_groups_by_campaign_id(campaign_id)
 ```
 
-#### Getting ad groups in campaign by ids
+#### Getting ad groups in a campaign by ids
 ```ruby
 campaign_id = 813721838
 ad_group_ids = [9866221838, 9866221813, 9866221911]
 response = service.get_ad_groups_by_ids(campaign_id, ad_group_ids)
 ```
 
-#### Adding ad groups to campaign
+#### Adding ad groups to a campaign
 ```ruby
 # You can add a maximum of 1,000 ad groups in a single call.
 # Each campaign can have up to 20,000 ad groups.
@@ -134,7 +135,7 @@ ad_groups = [
 response = service.add_ad_groups(campaign_id, ad_groups)
 ```
 
-#### Updating ad groups in campaign
+#### Updating ad groups in a campaign
 ```ruby
 # You can add a maximum of 1,000 ad groups in a single call.
 # Each campaign can have up to 20,000 ad groups.
@@ -150,22 +151,29 @@ ad_groups = [
 response = service.update_ad_groups(campaign_id, ad_groups)
 ```
 
+#### Deleting ad groups from a campaign
+```ruby
+campaign_id = 813721838
+ad_group_ids_to_delete = [9866221838, 9866221839, 9866221840]
+response = service.delete_ad_groups(campaign_id, ad_group_ids_to_delete)
+```
+
 ---
 
-#### Getting ads in ad group
+#### Getting ads in an ad group
 ```ruby
 ad_group_id = 9866221838
 response = service.get_ads_by_ad_group_id(ad_group_id)
 ```
 
-#### Getting ads in ad group by ids
+#### Getting ads in an ad group by ids
 ```ruby
 ad_group_id = 9866221838
 ad_ids = [454873284248, 454873284249, 454873284250]
 response = service.get_ads_by_ids(ad_group_id, ad_ids)
 ```
 
-#### Adding ads to ad group
+#### Adding ads to an ad group
 ```ruby
 # You can add a maximum of 50 ads in an ad group.
 ad_group_id = 9866221838
@@ -193,7 +201,7 @@ expanded_text_ads = [
 response = service.add_ads(ad_group_id, expanded_text_ads)
 ```
 
-#### Updating ads in ad group
+#### Updating ads in an ad group
 ```ruby
 ad_group_id = 9866221838
 updated_expanded_text_ads = [
@@ -209,22 +217,29 @@ updated_expanded_text_ads = [
 response = service.update_ads(ad_group_id, updated_expanded_text_ads)
 ```
 
+#### Deleting ads from an ad group
+```ruby
+ad_group_id = 9866221838
+ad_ids_to_delete = [454873284248, 454873284249, 454873284250]
+response = service.delete_ads(ad_group_id, ad_ids_to_delete)
+```
+
 ---
 
-#### Getting keywords in ad group
+#### Getting keywords in an ad group
 ```ruby
 ad_group_id = 9866221838
 response = service.get_keywords_by_ad_group_id(ad_group_id)
 ```
 
-#### Getting keywords in ad group by ids
+#### Getting keywords in an ad group by ids
 ```ruby
 ad_group_id = 9866221838
 keyword_ids = [234873284248, 234873284249, 234873284250]
 response = service.get_keywords_by_ids(ad_group_id, keyword_ids)
 ```
 
-#### Adding keywords to ad group
+#### Adding keywords to an ad group
 ```ruby
 ad_group_id = 9866221838
 keywords = [
@@ -249,7 +264,7 @@ keywords = [
 response = service.add_keywords(ad_group_id, keywords)
 ```
 
-#### Updating keywords in ad group
+#### Updating keywords in an ad group
 ```ruby
 ad_group_id = 9866221838
 updated_keywords = [
@@ -263,6 +278,13 @@ updated_keywords = [
 response = service.update_keywords(ad_group_id, updated_keywords)
 ```
 
+#### Deleting keywords from an ad group
+```ruby
+ad_group_id = 9866221838
+keyword_ids_to_delete = [234873284248, 234873284249, 234873284250]
+response = service.delete_keywords(ad_group_id, keyword_ids_to_delete)
+```
+
 ### Bulk Service
 Not yet supported
 
@@ -273,10 +295,11 @@ Not yet supported
 Not yet supported. Use: https://github.com/FindHotel/bing-ads-reporting
 
 ## Development
-
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 To install this gem onto your local machine, run `bundle exec rake install`.
 
-## Contributing
+## Tests
+Endpoints were manually tested but although RSpec is installed as a test framework, there are no tests written yet.
 
+## Contributing
 Bug reports and pull requests are welcome on GitHub at https://github.com/FindHotel/bing-ads.
