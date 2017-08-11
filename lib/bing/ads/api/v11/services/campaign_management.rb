@@ -199,6 +199,16 @@ module Bing
               response_body(response, __method__)
             end
 
+            def delete_keywords(ad_group_id, keyword_ids)
+              validate_limits!(:keyword, :delete, keyword_ids)
+              payload = {
+                ad_group_id: ad_group_id,
+                keyword_ids: { 'ins1:long' => keyword_ids }
+              }
+              response = call(:delete_keywords, payload)
+              response_body(response, __method__)
+            end
+
             # TODO add_ad_extensions
             # TODO add_ad_group_criterions
             # TODO add_audiences
