@@ -314,7 +314,9 @@ module Bing
 
             def prepare_keyword(keyword)
               keyword = Bing::Ads::Utils.sort_keys(keyword)
-              keyword[:bid] = { amount: keyword[:bid] } if keyword[:bid]
+              # To use the AdGroup default match type bid,
+              # set the Amount element of the Bid object to null.
+              keyword[:bid] = { amount: keyword[:bid] }
               if keyword[:bidding_scheme]
                 # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
                 keyword[:bidding_scheme] = {
