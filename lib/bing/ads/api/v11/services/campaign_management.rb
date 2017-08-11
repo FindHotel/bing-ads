@@ -39,6 +39,7 @@ module Bing
             end
 
             def delete_campaigns(account_id, campaign_ids)
+              validate_limits!(:campaign, :delete, campaign_ids)
               payload = {
                 account_id: account_id,
                 campaign_ids: { 'ins1:long' => campaign_ids }
@@ -83,6 +84,16 @@ module Bing
                 ad_groups: { ad_group: ad_groups }
               }
               response = call(:update_ad_groups, payload)
+              response_body(response, __method__)
+            end
+
+            def delete_ad_groups(campaign_id, ad_group_ids)
+              validate_limits!(:ad_group, :delete, ad_group_ids)
+              payload = {
+                campaign_id: campaign_id,
+                ad_group_ids: { 'ins1:long' => ad_group_ids }
+              }
+              response = call(:delete_ad_groups, payload)
               response_body(response, __method__)
             end
 
@@ -137,6 +148,16 @@ module Bing
                 ads: { ad: ads }
               }
               response = call(:update_ads, payload)
+              response_body(response, __method__)
+            end
+
+            def delete_ads(ad_group_id, ad_ids)
+              validate_limits!(:ad, :delete, ad_ids)
+              payload = {
+                ad_group_id: ad_group_id,
+                ad_ids: { 'ins1:long' => ad_ids }
+              }
+              response = call(:delete_ads, payload)
               response_body(response, __method__)
             end
 
@@ -195,8 +216,6 @@ module Bing
             # TODO apply_product_partition_actions
             # TODO delete_ad_extensions
             # TODO delete_ad_group_criterions
-            # TODO delete_ad_groups
-            # TODO delete_ads
             # TODO delete_audiences
             # TODO delete_budgets
             # TODO delete_campaign_criterions
