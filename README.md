@@ -53,7 +53,6 @@ account_id = 5278183
 campaigns = [
   {
     budget_type: Bing::Ads::API::V11.constants.campaign_management.budget_limit_type.daily_budget_standard,
-    conversion_tracking_enabled: "false",
     daily_budget: 2000,
     description: 'Amsterdam-based global campaign',
     name: '51 - Global - Chain - Mixed - N -en- Amsterdam - 100 - 26479',
@@ -73,12 +72,10 @@ campaigns = [
   {
     id: 813721838,
     budget_type: Bing::Ads::API::V11.constants.campaign_management.budget_limit_type.daily_budget_standard,
-    conversion_tracking_enabled: "false",
   },
   {
     id: 813721849,
     budget_type: Bing::Ads::API::V11.constants.campaign_management.budget_limit_type.daily_budget_standard,
-    conversion_tracking_enabled: "false",
   },
   # ...
 ]
@@ -293,6 +290,12 @@ Not yet supported
 
 ### Reporting Service
 Not yet supported. Use: https://github.com/FindHotel/bing-ads-reporting
+
+### Errors raised
+* `Bing::Ads::API::Errors::AuthenticationParamsMissing`
+No username/password or authentication_token.
+* `Bing::Ads::API::Errors::AuthenticationTokenExpired` Authentication token needs to be refreshed.
+* `Bing::Ads::API::Errors::LimitError` An API limit has been exceeded on a specific request. Check message for details.
 
 ## Development
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
