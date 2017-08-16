@@ -23,6 +23,7 @@ module Bing
               @environment = options.delete(:environment)
               @retry_attempts = options.delete(:retry_attempts) || 0
               @account_id = options[:account_id]
+              @customer_id = options[:customer_id]
               raise 'You must set the service environment' unless @environment
               options[:wsdl_url] = service_wsdl_url
               options[:namespace_identifier] = Bing::Ads::API::V11::NAMESPACE_IDENTIFIER

@@ -23,6 +23,28 @@ Or install it yourself as:
 
 ## Usage
 
+### Customer Management Service
+#### Initialization
+```ruby
+# Authentication token is not supported in sandbox, use `username` and `password` instead
+# https://msdn.microsoft.com/en-us/library/dn277356.aspx
+
+options = {
+  environment: :sandbox,
+  authentication_token: '39b290146bea6ce975c37cfc23',
+  developer_token: 'BBD37VB98',
+  customer_id: '21027149',
+  # client_settings: { logger: LOGGER::STDOUT }
+}
+
+service = Bing::Ads::API::V11::Services::CustomerManagement.new(options)
+```
+
+#### Getting accounts info
+```ruby
+response = service.get_accounts_info
+```
+
 ### Campaign Management Service
 #### Initialization
 ```ruby
@@ -283,9 +305,6 @@ response = service.delete_keywords(ad_group_id, keyword_ids_to_delete)
 ```
 
 ### Bulk Service
-Not yet supported
-
-### Customer Management Service
 Not yet supported
 
 ### Reporting Service
