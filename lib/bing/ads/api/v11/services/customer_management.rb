@@ -12,7 +12,7 @@ module Bing
             def get_accounts_info(customer_id = @customer_id, only_parent_accounts = false)
               payload = {
                 customer_id: customer_id,
-                only_parent_accounts: only_parent_accounts
+                only_parent_accounts: (only_parent_accounts == true).to_s
               }
               response = call(:get_accounts_info, payload.compact)
               response_body = response_body(response, __method__)
