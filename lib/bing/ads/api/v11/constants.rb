@@ -21,6 +21,8 @@ module Bing
           source :yaml, wsdl_path, :wsdl
           env :default
         end
+
+        Bing::Ads::API::V11.constants = Persey.config
       end
     end
   end

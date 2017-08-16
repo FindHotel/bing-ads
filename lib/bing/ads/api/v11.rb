@@ -6,7 +6,11 @@ module Bing
         NAMESPACE_IDENTIFIER = :v11
 
         def self.constants
-          Persey.config
+          @_config || fail('Error loading bing ads gem')
+        end
+
+        def self.constants=(config)
+          @_config = config
         end
       end
     end
