@@ -16,6 +16,17 @@ module Bing
               [response_body[:campaigns][:campaign]].flatten.compact
             end
 
+            def get_campaigns_by_ids(account_id, campaign_ids)
+              account_id ||= @account_id
+              payload = {
+               account_id: account_id,
+               campaign_ids: { 'ins1:long' => campaign_ids }
+              }
+              response = call(:get_campaigns_by_ids, payload)
+              response_body = response_body(response, __method__)
+              [response_body[:campaigns][:campaign]].flatten.compact
+            end
+
             def add_campaigns(account_id, campaigns)
               validate_limits!(:campaign, :add, campaigns)
               campaigns = campaigns.map { |campaign| prepare_campaign(campaign) }
