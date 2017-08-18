@@ -69,6 +69,13 @@ account_id = 5278183
 response = service.get_campaigns_by_account_id(account_id)
 ```
 
+#### Getting campaigns in an account by ids
+```ruby
+account_id = 5278183
+campaign_ids = [813721838, 813721849, 813721850]
+response = service.get_campaigns_by_ids(account_id, campaign_ids)
+```
+
 #### Adding campaigns
 ```ruby
 account_id = 5278183
