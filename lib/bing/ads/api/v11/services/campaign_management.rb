@@ -262,7 +262,6 @@ module Bing
             # TODO get_budgets_by_ids
             # TODO get_campaign_criterions_by_ids
             # TODO get_campaign_ids_by_budget_ids
-            # TODO get_campaigns_by_ids
             # TODO get_campaign_sizes_by_account_id
             # TODO get_config_value
             # TODO get_conversion_goals_by_ids
