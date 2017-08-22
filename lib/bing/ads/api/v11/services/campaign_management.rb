@@ -29,7 +29,7 @@ module Bing
 
             def add_campaigns(account_id, campaigns)
               validate_limits!(:campaign, :add, campaigns)
-              campaigns = campaigns.map { |campaign| prepare_campaign(campaign) }
+              campaigns = campaigns.map { |campaign| Bing::Ads::API::V11::Data::Campaign.prepare(campaign) }
               payload = {
                 account_id: account_id,
                 campaigns: { campaign: campaigns }
@@ -40,7 +40,7 @@ module Bing
 
             def update_campaigns(account_id, campaigns)
               validate_limits!(:campaign, :update, campaigns)
-              campaigns = campaigns.map { |campaign| prepare_campaign(campaign) }
+              campaigns = campaigns.map { |campaign| Bing::Ads::API::V11::Data::Campaign.prepare(campaign) }
               payload = {
                 account_id: account_id,
                 campaigns: { campaign: campaigns }
@@ -78,7 +78,7 @@ module Bing
 
             def add_ad_groups(campaign_id, ad_groups)
               validate_limits!(:ad_group, :add, ad_groups)
-              ad_groups = ad_groups.map { |ad_group| prepare_ad_group(ad_group) }
+              ad_groups = ad_groups.map { |ad_group| Bing::Ads::API::V11::Data::AdGroup.prepare(ad_group) }
               payload = {
                 campaign_id: campaign_id,
                 ad_groups: { ad_group: ad_groups }
@@ -89,7 +89,7 @@ module Bing
 
             def update_ad_groups(campaign_id, ad_groups)
               validate_limits!(:ad_group, :update, ad_groups)
-              ad_groups = ad_groups.map { |ad_group| prepare_ad_group(ad_group) }
+              ad_groups = ad_groups.map { |ad_group| Bing::Ads::API::V11::Data::AdGroup.prepare(ad_group) }
               payload = {
                 campaign_id: campaign_id,
                 ad_groups: { ad_group: ad_groups }
@@ -142,7 +142,7 @@ module Bing
 
             def add_ads(ad_group_id, ads)
               validate_limits!(:ad, :add, ads)
-              ads = ads.map { |ad| prepare_ad(ad) }
+              ads = ads.map { |ad| Bing::Ads::API::V11::Data::ExpandedTextAd.prepare(ad) }
               payload = {
                 ad_group_id: ad_group_id,
                 ads: { ad: ads }
@@ -153,7 +153,7 @@ module Bing
 
             def update_ads(ad_group_id, ads)
               validate_limits!(:ad, :update, ads)
-              ads = ads.map { |ad| prepare_ad(ad) }
+              ads = ads.map { |ad| Bing::Ads::API::V11::Data::ExpandedTextAd.prepare(ad) }
               payload = {
                 ad_group_id: ad_group_id,
                 ads: { ad: ads }
@@ -190,7 +190,7 @@ module Bing
 
             def add_keywords(ad_group_id, keywords)
               validate_limits!(:keyword, :add, keywords)
-              keywords = keywords.map { |keyword| prepare_keyword(keyword) }
+              keywords = keywords.map { |keyword| Bing::Ads::API::V11::Data::Keyword.prepare(keyword) }
               payload = {
                 ad_group_id: ad_group_id,
                 keywords: { keyword: keywords }
@@ -201,7 +201,7 @@ module Bing
 
             def update_keywords(ad_group_id, keywords)
               validate_limits!(:keyword, :update, keywords)
-              keywords = keywords.map { |keyword| prepare_keyword(keyword) }
+              keywords = keywords.map { |keyword| Bing::Ads::API::V11::Data::Keyword.prepare(keyword) }
               payload = {
                 ad_group_id: ad_group_id,
                 keywords: { keyword: keywords }
@@ -307,72 +307,6 @@ module Bing
 
             def service_name
               'campaign_management'
-            end
-
-            def prepare_campaign(campaign)
-              campaign = Bing::Ads::Utils.sort_keys(campaign)
-              if campaign[:bidding_scheme]
-                campaign[:bidding_scheme] = {
-                  # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
-                  type: campaign[:bidding_scheme],
-                  '@xsi:type' => "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{campaign[:bidding_scheme]}"
-                }
-              end
-              campaign[:languages] = { 'ins1:string' => campaign[:languages] } if campaign[:languages]
-              # TODO UrlCustomParameters
-              # TODO Settings
-              Bing::Ads::Utils.camelcase_keys(campaign)
-            end
-
-            def prepare_ad_group(ad_group)
-              ad_group = Bing::Ads::Utils.sort_keys(ad_group)
-              ad_group[:ad_rotation] = { type: ad_group[:ad_rotation] } if ad_group[:ad_rotation]
-              if ad_group[:bidding_scheme]
-                # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
-                ad_group[:bidding_scheme] = {
-                  type: ad_group[:bidding_scheme],
-                  '@xsi:type' => "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{ad_group[:bidding_scheme]}"
-                }
-              end
-              ad_group[:content_match_bid] = { amount: ad_group[:content_match_bid] } if ad_group[:content_match_bid]
-              ad_group[:end_date] = date_hash(ad_group[:end_date]) if ad_group[:end_date]
-              ad_group[:search_bid] = { amount: ad_group[:search_bid] } if ad_group[:search_bid]
-              ad_group[:start_date] = date_hash(ad_group[:start_date]) if ad_group[:start_date]
-              # TODO UrlCustomParameters
-              Bing::Ads::Utils.camelcase_keys(ad_group)
-            end
-
-            def prepare_ad(ad)
-              ad = Bing::Ads::Utils.sort_keys(ad)
-              ad['@xsi:type'] = "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{ad[:type]}"
-              ad[:final_mobile_urls] = { 'ins1:string' => ad[:final_mobile_urls] } if ad[:final_mobile_urls]
-              ad[:final_urls] = { 'ins1:string' => ad[:final_urls] } if ad[:final_urls]
-              # TODO FinalAppUrls
-              Bing::Ads::Utils.camelcase_keys(ad)
-            end
-
-            def prepare_keyword(keyword)
-              keyword = Bing::Ads::Utils.sort_keys(keyword)
-              # To use the AdGroup default match type bid,
-              # set the Amount element of the Bid object to null.
-              keyword[:bid] = { amount: keyword[:bid] }
-              if keyword[:bidding_scheme]
-                # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
-                keyword[:bidding_scheme] = {
-                  type: keyword[:bidding_scheme],
-                  '@xsi:type' => "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{keyword[:bidding_scheme]}"
-                }
-              end
-              keyword[:final_mobile_urls] = { 'ins1:string' => keyword[:final_mobile_urls] } if keyword[:final_mobile_urls]
-              keyword[:final_urls] = { 'ins1:string' => keyword[:final_urls] } if keyword[:final_urls]
-              # TODO FinalAppUrls
-              # TODO UrlCustomParameters
-              Bing::Ads::Utils.camelcase_keys(keyword)
-            end
-
-            def date_hash(date)
-              date = Date.parse(date) if date.is_a?(String)
-              { day: date.day, month: date.month, year: date.year }
             end
 
             def validate_limits!(type, operation, array)
