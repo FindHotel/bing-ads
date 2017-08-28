@@ -14,6 +14,7 @@ module Bing
             # * account_id - identifier of the account that own the entities in the request
             # * client_settings - Hash with any Client additional options (such as header, logger or enconding)
             # * retry_attempts - Number of times the service must retry on failure
+            # * log_level - :debug :warn :error :fatal
             # (EITHER)
             # * authentication_token - OAuth2 token
             # (OR)

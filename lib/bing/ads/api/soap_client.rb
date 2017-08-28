@@ -17,6 +17,7 @@ module Bing
           @username               = options[:username]
           @password               = options[:password]
           @client_settings        = options[:client_settings]
+          @log_level              = options[:log_level] || :error
         end
 
         def call(operation:, payload: {})
@@ -31,7 +32,7 @@ module Bing
             namespace_identifier: namespace_identifier,
             soap_header: soap_header,
             log: true,
-            log_level: :debug,
+            log_level: @log_level,
             pretty_print_xml: true
           }
           settings.merge!(client_settings) if client_settings
