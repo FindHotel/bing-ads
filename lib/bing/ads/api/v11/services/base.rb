@@ -50,6 +50,8 @@ module Bing
                 response = soap_client.call(operation: operation.to_sym, payload: payload)
                 return response.hash
               rescue Savon::SOAPFault => error
+                Raven.capture_exception(ex)
+
                 fault_detail = error.to_hash[:fault][:detail]
                 if fault_detail.key?(:api_fault_detail)
                   handle_soap_fault(operation, fault_detail, :api_fault_detail)
@@ -59,10 +61,16 @@ module Bing
                   raise
                 end
               rescue Savon::HTTPError => error
+                Raven.capture_exception(ex)
+
                 raise
               rescue Savon::InvalidResponseError => error
+                Raven.capture_exception(ex)
+
                 raise
-              rescue
+              rescue => ex
+                Raven.capture_exception(ex)
+
                 if retries_made < retry_attempts
                   sleep(2**retries_made)
                   retries_made += 1
