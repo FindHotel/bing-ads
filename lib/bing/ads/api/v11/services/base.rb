@@ -57,11 +57,20 @@ module Bing
                 elsif fault_detail.key?(:ad_api_fault_detail)
                   handle_soap_fault(operation, fault_detail, :ad_api_fault_detail)
                 else
-                  raise
+                  if retries_made < retry_attempts
+                    sleep(2**retries_made)
+                    retries_made += 1
+                    retry
+                  else
+                    raise Bing::Ads::API::Errors::UnhandledSOAPFault,
+                          "SOAP error (#{fault_detail[key]}) while calling #{operation}. #{error.message}"
+                  end
                 end
               rescue Savon::HTTPError => error
+                # TODO better handling
                 raise
               rescue Savon::InvalidResponseError => error
+                # TODO better handling
                 raise
               rescue
                 if retries_made < retry_attempts
@@ -112,7 +121,8 @@ module Bing
                 raise Bing::Ads::API::Errors::AuthenticationTokenExpired,
                       'renew authentication token or obtain a new one.'
               else
-                raise "SOAP error while calling #{operation}, #{fault_detail[key]}"
+                raise Bing::Ads::API::Errors::UnhandledSOAPFault,
+                      "SOAP error (#{fault_detail[key]}) while calling #{operation}."
               end
             end
           end
