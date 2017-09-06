@@ -63,7 +63,7 @@ module Bing
                     retry
                   else
                     raise Bing::Ads::API::Errors::UnhandledSOAPFault,
-                          "SOAP error (#{fault_detail[key]}) while calling #{operation}. #{error.message}"
+                          "SOAP error (#{fault_detail.keys.join(', ')}) while calling #{operation}. #{error.message}"
                   end
                 end
               rescue Savon::HTTPError => error
