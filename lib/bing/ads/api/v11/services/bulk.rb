@@ -12,7 +12,7 @@ module Bing
             def get_bulk_upload_url(account_id = nil, response_mode = 'ErrorsOnly')
               account_id ||= @account_id
 
-              response = call(__method__, account_id: account_id, response_mode: response_mode)
+              response = call(__method__, response_mode: response_mode, account_id: account_id)
               response_body = response_body(response, __method__)
               response_body.slice(:request_id, :upload_url)
             end
