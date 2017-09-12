@@ -23,6 +23,8 @@ module Bing
               response_body.slice(:errors, :percent_complete, :request_status, :result_file_url)
             end
 
+            # TODO operations: https://msdn.microsoft.com/en-us/library/bing-ads-bulk-service-operations.aspx
+
             private
 
             def service_name

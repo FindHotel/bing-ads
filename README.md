@@ -312,7 +312,46 @@ response = service.delete_keywords(ad_group_id, keyword_ids_to_delete)
 ```
 
 ### Bulk Service
-Not yet supported
+#### Initialization
+```ruby
+# Authentication token is not supported in sandbox, use `username` and `password` instead
+# https://msdn.microsoft.com/en-us/library/dn277356.aspx
+
+options = {
+  environment: :sandbox,
+  authentication_token: '39b290146bea6ce975c37cfc23',
+  developer_token: 'BBD37VB98',
+  customer_id: '21027149',
+  account_id: '5278183',
+  # client_settings: { logger: LOGGER::STDOUT }
+}
+
+service = Bing::Ads::API::V11::Services::Bulk.new(options)
+```
+
+#### Submit a request for a URL where a bulk upload file may be posted.
+```ruby
+response = service.get_bulk_upload_url
+
+# @return
+# {
+#   request_id: 4981237213
+#   upload_url: '-'
+# }
+```
+
+#### Get the status and completion percentage of a bulk upload request.
+```ruby
+response = service.get_bulk_upload_status(request_id)
+
+# @return
+# {
+#   errors: [],
+#   percent_complete: 100,
+#   request_status: '-',
+#   result_file_url: '-'
+# }
+```
 
 ### Reporting Service
 Not yet supported. Use: https://github.com/FindHotel/bing-ads-reporting
