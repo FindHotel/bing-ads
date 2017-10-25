@@ -403,7 +403,7 @@ Response example:
 {:report_request_id=>"30000000999745662", :@xmlns=>"https://bingads.microsoft.com/Reporting/v11"}
 ```
 
-#### Pool Generate Report
+#### Poll Generate Report
 
 To retrieve the report generated you have a few options:
 
@@ -417,7 +417,7 @@ Or you can download the body of the report when it's ready. (and then write to a
 service.report_body(report_request_id) if service.report_ready?(report_request_id)
 ```
 
-You can also get the entire pool report object:
+You can also get the entire poll_generate_reportl report object:
 ```ruby
 service.poll_generate_report(report_request_id)
 ```
