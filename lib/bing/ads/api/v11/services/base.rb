@@ -51,11 +51,12 @@ module Bing
                 response = soap_client.call(operation: operation.to_sym, payload: payload)
                 return response.hash
               rescue Savon::SOAPFault => error
-                fault_detail = error.to_hash[:fault][:detail]
-                if fault_detail.key?(:api_fault_detail)
-                  handle_soap_fault(operation, fault_detail, :api_fault_detail)
-                elsif fault_detail.key?(:ad_api_fault_detail)
-                  handle_soap_fault(operation, fault_detail, :ad_api_fault_detail)
+                fault = error.to_hash[:fault]
+
+                if fault.dig(:detail, :api_fault_detail)
+                  handle_soap_fault(operation, fault[:detail], :api_fault_detail)
+                elsif fault.dig(:detail, :ad_api_fault_detail)
+                  handle_soap_fault(operation, fault[:detail], :ad_api_fault_detail)
                 else
                   if retries_made < retry_attempts
                     sleep(2**retries_made)
@@ -63,7 +64,7 @@ module Bing
                     retry
                   else
                     raise Bing::Ads::API::Errors::UnhandledSOAPFault,
-                          "SOAP error (#{fault_detail.keys.join(', ')}) while calling #{operation}. #{error.message}"
+                          "SOAP error (#{fault.keys.join(', ')}) while calling #{operation}. #{error.message}"
                   end
                 end
               rescue Savon::HTTPError => error
