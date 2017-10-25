@@ -354,13 +354,79 @@ response = service.get_bulk_upload_status(request_id)
 ```
 
 ### Reporting Service
-Not yet supported. Use: https://github.com/FindHotel/bing-ads-reporting
+
+#### Initialization
+```ruby
+# Authentication token is not supported in sandbox, use `username` and `password` instead
+# https://msdn.microsoft.com/en-us/library/dn277356.aspx
+
+options = {
+  environment: :sandbox,
+  authentication_token: '39b290146bea6ce975c37cfc23',
+  developer_token: 'BBD37VB98',
+  customer_id: '21027149',
+  # client_settings: { logger: LOGGER::STDOUT }
+}
+
+service = Bing::Ads::API::V11::Services::Reporting.new(options)
+```
+
+#### Submit Generate Report
+To get reports from Bing, you must first submit a report generation request.
+
+The method `submit_generate_report` receive two params as input, first the `report_type` and then a hash with the report options.
+
+Example:
+
+```ruby
+response = service.submit_generate_report(:keyword_performance, {
+  exclude_column_headers: false,
+  exclude_report_footer: false,
+  exclude_report_header: false,
+  language: 'English',
+  format: 'Tsv',
+  report_name: 'keyword_performance_report',
+  return_only_complete_data: false,
+  aggregation: 'Daily',
+  columns: [:destination_url, :average_cpc],
+  from_date: '2017-10-23',
+  to_date: '2017-10-25'
+  account_ids: [144012349, 224002158]
+})
+```
+
+The required options depend on the report type you are using.
+
+Response example:
+
+```ruby
+{:report_request_id=>"30000000999745662", :@xmlns=>"https://bingads.microsoft.com/Reporting/v11"}
+```
+
+#### Pool Generate Report
+
+To retrieve the report generated you have a few options:
+
+You can check if the report is ready and then get the url:
+```ruby
+service.report_url(report_request_id) if service.report_ready?(report_request_id)
+```
+
+Or you can download the body of the report when it's ready. (and then write to a file for example)
+```ruby
+service.report_body(report_request_id) if service.report_ready?(report_request_id)
+```
+
+You can also get the entire pool report object:
+```ruby
+service.poll_generate_report(report_request_id)
+```
 
 ### Errors raised
-* `Bing::Ads::API::Errors::AuthenticationParamsMissing`
-No username/password or authentication_token.
+* `Bing::Ads::API::Errors::AuthenticationParamsMissing` No username/password or authentication_token.
 * `Bing::Ads::API::Errors::AuthenticationTokenExpired` Authentication token needs to be refreshed.
 * `Bing::Ads::API::Errors::LimitError` An API limit has been exceeded on a specific request. Check message for details.
+* `Bing::Ads::API::Errors::DownloadError` Error when downloading a report body.
 
 ## Development
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

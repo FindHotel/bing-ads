@@ -7,6 +7,7 @@ require 'savon'
 
 require 'bing/ads/api/errors'
 require 'bing/ads/api/soap_client'
+require 'bing/ads/api/http_client'
 require 'bing/ads/api/v11'
 require 'bing/ads/api/v11/constants'
 require 'bing/ads/api/v11/data'

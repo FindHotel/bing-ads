@@ -11,6 +11,9 @@ module Bing
         # Bing::Ads::API::Errors::UnhandledSOAPFault
         class UnhandledSOAPFault < RuntimeError; end;
 
+        # Bing::Ads::API::Errors::DownloadError
+        class DownloadError < RuntimeError; end;
+
         # Bing::Ads::API::Errors::LimitError
         class LimitError < RuntimeError
           def initialize(operation, limit, type)
