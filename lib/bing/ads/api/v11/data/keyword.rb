@@ -32,7 +32,7 @@ module Bing
             def self.prepare(keyword_raw)
               # To use the AdGroup default match type bid,
               # set the Amount element of the Bid object to null.
-              keyword_raw[:bid] = { amount: keyword_raw[:bid] }
+              keyword_raw[:bid] = { amount: keyword_raw[:bid] } if keyword_raw.has_key? :bid
               if keyword_raw[:bidding_scheme]
                 # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
                 keyword_raw[:bidding_scheme] = {
@@ -43,9 +43,18 @@ module Bing
               keyword_raw[:final_mobile_urls] = { 'ins1:string' => keyword_raw[:final_mobile_urls] } if keyword_raw[:final_mobile_urls]
               keyword_raw[:final_urls] = { 'ins1:string' => keyword_raw[:final_urls] } if keyword_raw[:final_urls]
               # TODO FinalAppUrls
-              # TODO UrlCustomParameters
+              
               keyword_raw = Bing::Ads::Utils.sort_keys(keyword_raw)
               Bing::Ads::Utils.camelcase_keys(keyword_raw)
+              if keyword_raw.has_key? :url_custom_parameters
+                keyword_raw['v11:UrlCustomParameters'] = { '@xmlns:e301' => "http://schemas.datacontract.org/2004/07/Microsoft.AdCenter.Advertiser.CampaignManagement.Api.DataContracts.V11", 'e301:Parameters' => {'e301:CustomParameter' => []} }
+                keyword_raw[:url_custom_parameters].each do |k,v|
+                  keyword_raw['v11:UrlCustomParameters']['e301:Parameters']['e301:CustomParameter'].push({ 'e301:Key' => k, 'e301:Value' => v})
+                end
+                keyword_raw.delete :url_custom_parameters
+              end
+
+              keyword_raw
             end
           end
         end

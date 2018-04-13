@@ -296,6 +296,11 @@ ad_group_id = 9866221838
 updated_keywords = [
   {
     id: 234873284248,
+    final_urls: [ '...' ],
+    tracking_url_template: '',
+    url_custom_parameters: {
+      foo: 'bar'
+    }
     # updated attributes
   },
   # ...
