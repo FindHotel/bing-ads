@@ -19,6 +19,7 @@ module Bing
               :aggregation,
               :columns,
               :filter,
+              :max_rows,
               :scope,
               :time
             ]
