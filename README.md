@@ -1,7 +1,14 @@
 [![Gem Version](https://img.shields.io/gem/v/bing-ads.svg)](https://rubygems.org/gems/bing-ads)
 [![Build Status](https://travis-ci.org/FindHotel/bing-ads.svg?branch=master)](https://travis-ci.org/FindHotel/bing-ads)
 
+## We have not tested all pieces of functionality for this gem!
+Please look [here](https://docs.microsoft.com/en-us/bingads/guides/migration-guide?view=bingads-12) if you're using this gem to make sure that the functionality you're looking for didn't experience a breaking change
+
 # Bing::Ads
+
+## An ezcater fork of a Bing Ads API client
+
+We forked this repo in order to upgrade to API V12.
 
 A Ruby client for Bing Ads API that includes a proxy to all Bing Ads API web services and abstracts low level details of authentication with OAuth.
 
