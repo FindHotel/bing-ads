@@ -1,9 +1,9 @@
 module Bing
   module Ads
     module API
-      module V11
+      module V12
         module Data
-          # Bing::Ads::API::V11::Data::ExpandedTextAd
+          # Bing::Ads::API::V12::Data::ExpandedTextAd
           class ExpandedTextAd
 
             # @order
@@ -29,7 +29,7 @@ module Bing
             ]
 
             def self.prepare(ad_raw)
-              ad_raw['@xsi:type'] = "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{ad_raw[:type]}"
+              ad_raw['@xsi:type'] = "#{Bing::Ads::API::V12::NAMESPACE_IDENTIFIER}:#{ad_raw[:type]}"
               # TODO FinalAppUrls
               ad_raw[:final_mobile_urls] = { 'ins1:string' => ad_raw[:final_mobile_urls] } if ad_raw[:final_mobile_urls]
               ad_raw[:final_urls] = { 'ins1:string' => ad_raw[:final_urls] } if ad_raw[:final_urls]

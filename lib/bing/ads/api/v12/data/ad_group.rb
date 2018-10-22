@@ -1,9 +1,9 @@
 module Bing
   module Ads
     module API
-      module V11
+      module V12
         module Data
-          # Bing::Ads::API::V11::Data::AdGroup
+          # Bing::Ads::API::V12::Data::AdGroup
           class AdGroup
 
             # @order
@@ -37,7 +37,7 @@ module Bing
                 # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
                 ad_group_raw[:bidding_scheme] = {
                   type: ad_group_raw[:bidding_scheme],
-                  '@xsi:type' => "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{ad_group_raw[:bidding_scheme]}"
+                  '@xsi:type' => "#{Bing::Ads::API::V12::NAMESPACE_IDENTIFIER}:#{ad_group_raw[:bidding_scheme]}"
                 }
               end
               ad_group_raw[:content_match_bid] = { amount: ad_group_raw[:content_match_bid] } if ad_group_raw[:content_match_bid]
