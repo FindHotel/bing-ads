@@ -1,9 +1,9 @@
 module Bing
   module Ads
     module API
-      module V11
+      module V12
         module Services
-          # Bing::Ads::API::V11::Services::Bulk
+          # Bing::Ads::API::V12::Services::Bulk
           class Bulk < Base
             def initialize(options = {})
               super(options)

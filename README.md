@@ -1,7 +1,14 @@
 [![Gem Version](https://img.shields.io/gem/v/bing-ads.svg)](https://rubygems.org/gems/bing-ads)
 [![Build Status](https://travis-ci.org/FindHotel/bing-ads.svg?branch=master)](https://travis-ci.org/FindHotel/bing-ads)
 
+## We have not tested all pieces of functionality for this gem!
+Please look [here](https://docs.microsoft.com/en-us/bingads/guides/migration-guide?view=bingads-12) if you're using this gem to make sure that the functionality you're looking for didn't experience a breaking change
+
 # Bing::Ads
+
+## An ezcater fork of a Bing Ads API client
+
+We forked this repo in order to upgrade to API V12.
 
 A Ruby client for Bing Ads API that includes a proxy to all Bing Ads API web services and abstracts low level details of authentication with OAuth.
 
@@ -37,7 +44,7 @@ options = {
   # client_settings: { logger: LOGGER::STDOUT }
 }
 
-service = Bing::Ads::API::V11::Services::CustomerManagement.new(options)
+service = Bing::Ads::API::V12::Services::CustomerManagement.new(options)
 ```
 
 #### Getting accounts info
@@ -60,7 +67,7 @@ options = {
   # client_settings: { logger: LOGGER::STDOUT }
 }
 
-service = Bing::Ads::API::V11::Services::CampaignManagement.new(options)
+service = Bing::Ads::API::V12::Services::CampaignManagement.new(options)
 ```
 
 #### Getting campaigns
@@ -81,12 +88,12 @@ response = service.get_campaigns_by_ids(account_id, campaign_ids)
 account_id = 5278183
 campaigns = [
   {
-    budget_type: Bing::Ads::API::V11.constants.campaign_management.budget_limit_type.daily_budget_standard,
+    budget_type: Bing::Ads::API::V12.constants.campaign_management.budget_limit_type.daily_budget_standard,
     daily_budget: 2000,
     description: 'Amsterdam-based global campaign',
     name: '51 - Global - Chain - Mixed - N -en- Amsterdam - 100 - 26479',
-    status: Bing::Ads::API::V11.constants.campaign_management.campaign_status.paused,
-    time_zone: Bing::Ads::API::V11.constants.time_zones.amsterdam_berlin_bern_rome_stockholm_vienna
+    status: Bing::Ads::API::V12.constants.campaign_management.campaign_status.paused,
+    time_zone: Bing::Ads::API::V12.constants.time_zones.amsterdam_berlin_bern_rome_stockholm_vienna
   },
   # ...
 ]
@@ -100,11 +107,11 @@ account_id = 5278183
 campaigns = [
   {
     id: 813721838,
-    budget_type: Bing::Ads::API::V11.constants.campaign_management.budget_limit_type.daily_budget_standard,
+    budget_type: Bing::Ads::API::V12.constants.campaign_management.budget_limit_type.daily_budget_standard,
   },
   {
     id: 813721849,
-    budget_type: Bing::Ads::API::V11.constants.campaign_management.budget_limit_type.daily_budget_standard,
+    budget_type: Bing::Ads::API::V12.constants.campaign_management.budget_limit_type.daily_budget_standard,
   },
   # ...
 ]
@@ -141,16 +148,16 @@ response = service.get_ad_groups_by_ids(campaign_id, ad_group_ids)
 campaign_id = 813721838
 ad_groups = [
   {
-    ad_distribution: Bing::Ads::API::V11.constants.campaign_management.ad_distribution.search, # required
-    ad_rotation: Bing::Ads::API::V11.constants.campaign_management.ad_rotation.optimize_for_clicks, # optional
-    bidding_scheme: Bing::Ads::API::V11.constants.campaign_management.bidding_scheme.inherit_from_parent, # optional
+    ad_distribution: Bing::Ads::API::V12.constants.campaign_management.ad_distribution.search, # required
+    ad_rotation: Bing::Ads::API::V12.constants.campaign_management.ad_rotation.optimize_for_clicks, # optional
+    bidding_scheme: Bing::Ads::API::V12.constants.campaign_management.bidding_scheme.inherit_from_parent, # optional
     content_match_bid: 100, # optional
     end_date: '31/12/2020',
-    status: Bing::Ads::API::V11.constants.campaign_management.ad_group_status.paused,
-    language: Bing::Ads::API::V11.constants.languages.english,
+    status: Bing::Ads::API::V12.constants.campaign_management.ad_group_status.paused,
+    language: Bing::Ads::API::V12.constants.languages.english,
     name: 'H=WHotelAmsterdam&AG=1723812002',
     native_bid_adjustment: -50, # optional (-100 to 900)
-    remarketing_targeting_setting: Bing::Ads::API::V11.constants.campaign_management.remarketing_target_setting.bid_only, # optional
+    remarketing_targeting_setting: Bing::Ads::API::V12.constants.campaign_management.remarketing_target_setting.bid_only, # optional
     search_bid: 100, # optional
     start_date: '5/7/2017',
   },
@@ -169,7 +176,7 @@ campaign_id = 813721838
 ad_groups = [
   {
     id: 9866221838,
-    status: Bing::Ads::API::V11.constants.campaign_management.ad_group_status.active
+    status: Bing::Ads::API::V12.constants.campaign_management.ad_group_status.active
   },
   # ...
 ]
@@ -205,7 +212,7 @@ response = service.get_ads_by_ids(ad_group_id, ad_ids)
 ad_group_id = 9866221838
 expanded_text_ads = [
   {
-    type: Bing::Ads::API::V11.constants.campaign_management.ad_types.expanded_text_ad, # ExpandedTextAd
+    type: Bing::Ads::API::V12.constants.campaign_management.ad_types.expanded_text_ad, # ExpandedTextAd
     path_1: 'Amsterdam',
     path_2: 'Hotels',
     text: 'Compare over 150 booking sites! Find guaranteed low hotel rates.',
@@ -270,14 +277,14 @@ response = service.get_keywords_by_ids(ad_group_id, keyword_ids)
 ad_group_id = 9866221838
 keywords = [
   {
-    bidding_scheme: Bing::Ads::API::V11.constants.campaign_management.bidding_scheme.inherit_from_parent,
+    bidding_scheme: Bing::Ads::API::V12.constants.campaign_management.bidding_scheme.inherit_from_parent,
     bid: 5,
     # optional, ad final urls used if this is not set
     final_urls: [
       'https://www.findhotel.net/Places/Amsterdam.htm?attrs=pet-friendly'
     ],
-    match_type: Bing::Ads::API::V11.constants.campaign_management.match_types.exact, # also broad, content, phrase
-    status: Bing::Ads::API::V11.constants.campaign_management.keyword_statuses.active,
+    match_type: Bing::Ads::API::V12.constants.campaign_management.match_types.exact, # also broad, content, phrase
+    status: Bing::Ads::API::V12.constants.campaign_management.keyword_statuses.active,
     text: 'Pet-friendly Hotels in Amsterdam'
   },
   # ...
@@ -326,7 +333,7 @@ options = {
   # client_settings: { logger: LOGGER::STDOUT }
 }
 
-service = Bing::Ads::API::V11::Services::Bulk.new(options)
+service = Bing::Ads::API::V12::Services::Bulk.new(options)
 ```
 
 #### Submit a request for a URL where a bulk upload file may be posted.
@@ -368,7 +375,7 @@ options = {
   # client_settings: { logger: LOGGER::STDOUT }
 }
 
-service = Bing::Ads::API::V11::Services::Reporting.new(options)
+service = Bing::Ads::API::V12::Services::Reporting.new(options)
 ```
 
 #### Submit Generate Report
@@ -400,7 +407,7 @@ The required options depend on the report type you are using.
 Response example:
 
 ```ruby
-{:report_request_id=>"30000000999745662", :@xmlns=>"https://bingads.microsoft.com/Reporting/v11"}
+{:report_request_id=>"30000000999745662", :@xmlns=>"https://bingads.microsoft.com/Reporting/v12"}
 ```
 
 #### Poll Generate Report
