@@ -9,9 +9,9 @@ module Bing
               super(options)
             end
 
-            def get_campaigns_by_account_id(account_id=nil)
+            def get_campaigns_by_account_id(account_id=nil, campaign_type: "Search")
               account_id ||= @account_id
-              response = call(:get_campaigns_by_account_id, account_id: account_id)
+              response = call(:get_campaigns_by_account_id, account_id: account_id, campaign_type: campaign_type)
               response_body = response_body(response, __method__)
               [response_body[:campaigns][:campaign]].flatten.compact
             end
