@@ -1,9 +1,9 @@
 module Bing
   module Ads
     module API
-      module V11
+      module V12
         module Data
-          # Bing::Ads::API::V11::Data::Campaign
+          # Bing::Ads::API::V12::Data::Campaign
           class Campaign
 
             # @order
@@ -33,7 +33,7 @@ module Bing
                 campaign_raw[:bidding_scheme] = {
                   # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
                   type: campaign_raw[:bidding_scheme],
-                  '@xsi:type' => "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{campaign_raw[:bidding_scheme]}"
+                  '@xsi:type' => "#{Bing::Ads::API::V12::NAMESPACE_IDENTIFIER}:#{campaign_raw[:bidding_scheme]}"
                 }
               end
               # TODO UrlCustomParameters

@@ -1,9 +1,9 @@
 module Bing
   module Ads
     module API
-      module V11
+      module V12
         module Data
-          # Bing::Ads::API::V11::Data::Keyword
+          # Bing::Ads::API::V12::Data::Keyword
           class Keyword
 
             # @order
@@ -37,7 +37,7 @@ module Bing
                 # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
                 keyword_raw[:bidding_scheme] = {
                   type: keyword_raw[:bidding_scheme],
-                  '@xsi:type' => "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{keyword_raw[:bidding_scheme]}"
+                  '@xsi:type' => "#{Bing::Ads::API::V12::NAMESPACE_IDENTIFIER}:#{keyword_raw[:bidding_scheme]}"
                 }
               end
               keyword_raw[:final_mobile_urls] = { 'ins1:string' => keyword_raw[:final_mobile_urls] } if keyword_raw[:final_mobile_urls]
