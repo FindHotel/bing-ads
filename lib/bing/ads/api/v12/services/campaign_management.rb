@@ -1,9 +1,9 @@
 module Bing
   module Ads
     module API
-      module V11
+      module V12
         module Services
-          # Bing::Ads::API::V11::Services::CampaignManagement
+          # Bing::Ads::API::V12::Services::CampaignManagement
           class CampaignManagement < Base
             def initialize(options = {})
               super(options)
@@ -29,7 +29,7 @@ module Bing
 
             def add_campaigns(account_id, campaigns)
               validate_limits!(:campaign, :add, campaigns)
-              campaigns = campaigns.map { |campaign| Bing::Ads::API::V11::Data::Campaign.prepare(campaign) }
+              campaigns = campaigns.map { |campaign| Bing::Ads::API::V12::Data::Campaign.prepare(campaign) }
               payload = {
                 account_id: account_id,
                 campaigns: { campaign: campaigns }
@@ -40,7 +40,7 @@ module Bing
 
             def update_campaigns(account_id, campaigns)
               validate_limits!(:campaign, :update, campaigns)
-              campaigns = campaigns.map { |campaign| Bing::Ads::API::V11::Data::Campaign.prepare(campaign) }
+              campaigns = campaigns.map { |campaign| Bing::Ads::API::V12::Data::Campaign.prepare(campaign) }
               payload = {
                 account_id: account_id,
                 campaigns: { campaign: campaigns }
@@ -78,7 +78,7 @@ module Bing
 
             def add_ad_groups(campaign_id, ad_groups)
               validate_limits!(:ad_group, :add, ad_groups)
-              ad_groups = ad_groups.map { |ad_group| Bing::Ads::API::V11::Data::AdGroup.prepare(ad_group) }
+              ad_groups = ad_groups.map { |ad_group| Bing::Ads::API::V12::Data::AdGroup.prepare(ad_group) }
               payload = {
                 campaign_id: campaign_id,
                 ad_groups: { ad_group: ad_groups }
@@ -89,7 +89,7 @@ module Bing
 
             def update_ad_groups(campaign_id, ad_groups)
               validate_limits!(:ad_group, :update, ad_groups)
-              ad_groups = ad_groups.map { |ad_group| Bing::Ads::API::V11::Data::AdGroup.prepare(ad_group) }
+              ad_groups = ad_groups.map { |ad_group| Bing::Ads::API::V12::Data::AdGroup.prepare(ad_group) }
               payload = {
                 campaign_id: campaign_id,
                 ad_groups: { ad_group: ad_groups }
@@ -142,7 +142,7 @@ module Bing
 
             def add_ads(ad_group_id, ads)
               validate_limits!(:ad, :add, ads)
-              ads = ads.map { |ad| Bing::Ads::API::V11::Data::ExpandedTextAd.prepare(ad) }
+              ads = ads.map { |ad| Bing::Ads::API::V12::Data::ExpandedTextAd.prepare(ad) }
               payload = {
                 ad_group_id: ad_group_id,
                 ads: { ad: ads }
@@ -153,7 +153,7 @@ module Bing
 
             def update_ads(ad_group_id, ads)
               validate_limits!(:ad, :update, ads)
-              ads = ads.map { |ad| Bing::Ads::API::V11::Data::ExpandedTextAd.prepare(ad) }
+              ads = ads.map { |ad| Bing::Ads::API::V12::Data::ExpandedTextAd.prepare(ad) }
               payload = {
                 ad_group_id: ad_group_id,
                 ads: { ad: ads }
@@ -190,7 +190,7 @@ module Bing
 
             def add_keywords(ad_group_id, keywords)
               validate_limits!(:keyword, :add, keywords)
-              keywords = keywords.map { |keyword| Bing::Ads::API::V11::Data::Keyword.prepare(keyword) }
+              keywords = keywords.map { |keyword| Bing::Ads::API::V12::Data::Keyword.prepare(keyword) }
               payload = {
                 ad_group_id: ad_group_id,
                 keywords: { keyword: keywords }
@@ -201,7 +201,7 @@ module Bing
 
             def update_keywords(ad_group_id, keywords)
               validate_limits!(:keyword, :update, keywords)
-              keywords = keywords.map { |keyword| Bing::Ads::API::V11::Data::Keyword.prepare(keyword) }
+              keywords = keywords.map { |keyword| Bing::Ads::API::V12::Data::Keyword.prepare(keyword) }
               payload = {
                 ad_group_id: ad_group_id,
                 keywords: { keyword: keywords }
@@ -310,7 +310,7 @@ module Bing
             end
 
             def validate_limits!(type, operation, array)
-              limit = Bing::Ads::API::V11.constants.limits.per_call.send(type)
+              limit = Bing::Ads::API::V12.constants.limits.per_call.send(type)
               if array.size > limit
                 raise Bing::Ads::API::Errors::LimitError.new(operation, limit, type)
               end
@@ -319,11 +319,11 @@ module Bing
             def all_ad_types
               {
                 ad_type: [
-                  Bing::Ads::API::V11.constants.campaign_management.ad_types_for_get.text,
-                  Bing::Ads::API::V11.constants.campaign_management.ad_types_for_get.expanded_text,
-                  Bing::Ads::API::V11.constants.campaign_management.ad_types_for_get.image,
-                  Bing::Ads::API::V11.constants.campaign_management.ad_types_for_get.product,
-                  Bing::Ads::API::V11.constants.campaign_management.ad_types_for_get.app_install
+                  Bing::Ads::API::V12.constants.campaign_management.ad_types_for_get.text,
+                  Bing::Ads::API::V12.constants.campaign_management.ad_types_for_get.expanded_text,
+                  Bing::Ads::API::V12.constants.campaign_management.ad_types_for_get.image,
+                  Bing::Ads::API::V12.constants.campaign_management.ad_types_for_get.product,
+                  Bing::Ads::API::V12.constants.campaign_management.ad_types_for_get.app_install
                 ]
               }
             end
