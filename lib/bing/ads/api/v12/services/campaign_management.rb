@@ -18,9 +18,19 @@ module Bing
 
             def get_campaigns_by_ids(account_id, campaign_ids)
               account_id ||= @account_id
+              campaign_ids_elements =
+                if campaign_ids.nil?
+                  nil
+                else
+                  {
+                    'a1:long' => campaign_ids,
+                    '@xmlns:a1' => 'http://schemas.microsoft.com/2003/10/Serialization/Arrays'
+                  }
+                end
+              
               payload = {
                account_id: account_id,
-               campaign_ids: { 'a1:long' => campaign_ids }
+               campaign_ids: campaign_ids_elements
               }
               response = call(:get_campaigns_by_ids, payload)
               response_body = response_body(response, __method__)
