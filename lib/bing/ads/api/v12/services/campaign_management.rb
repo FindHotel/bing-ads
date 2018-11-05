@@ -20,7 +20,7 @@ module Bing
               account_id ||= @account_id
               payload = {
                account_id: account_id,
-               campaign_ids: { 'ins1:long' => campaign_ids }
+               campaign_ids: campaign_ids
               }
               response = call(:get_campaigns_by_ids, payload)
               response_body = response_body(response, __method__)
