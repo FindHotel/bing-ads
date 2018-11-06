@@ -40,8 +40,8 @@ module Bing
                   '@xsi:type' => "#{Bing::Ads::API::V12::NAMESPACE_IDENTIFIER}:#{keyword_raw[:bidding_scheme]}"
                 }
               end
-              keyword_raw[:final_mobile_urls] = { 'ins1:string' => keyword_raw[:final_mobile_urls] } if keyword_raw[:final_mobile_urls]
-              keyword_raw[:final_urls] = { 'ins1:string' => keyword_raw[:final_urls] } if keyword_raw[:final_urls]
+              keyword_raw[:final_mobile_urls] = { 'a1:string' => keyword_raw[:final_mobile_urls] } if keyword_raw[:final_mobile_urls]
+              keyword_raw[:final_urls] = { 'a1:string' => keyword_raw[:final_urls] } if keyword_raw[:final_urls]
               # TODO FinalAppUrls
               
               keyword_raw = Bing::Ads::Utils.sort_keys(keyword_raw)
