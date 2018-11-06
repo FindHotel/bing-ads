@@ -47,9 +47,9 @@ module Bing
               keyword_raw = Bing::Ads::Utils.sort_keys(keyword_raw)
               Bing::Ads::Utils.camelcase_keys(keyword_raw)
               if keyword_raw.has_key? :url_custom_parameters
-                keyword_raw['v12:UrlCustomParameters'] = { '@xmlns:e301' => "http://schemas.datacontract.org/2004/07/Microsoft.AdCenter.Advertiser.CampaignManagement.Api.DataContracts.V11", 'e301:Parameters' => {'e301:CustomParameter' => []} }
+                keyword_raw['UrlCustomParameters'] = { 'Parameters' => {'CustomParameter' => []} }
                 keyword_raw[:url_custom_parameters].each do |k,v|
-                  keyword_raw['v12:UrlCustomParameters']['e301:Parameters']['e301:CustomParameter'].push({ 'e301:Key' => k, 'e301:Value' => v})
+                  keyword_raw['UrlCustomParameters']['Parameters']['CustomParameter'].push({ 'Key' => k, 'Value' => v})
                 end
                 keyword_raw.delete :url_custom_parameters
               end
