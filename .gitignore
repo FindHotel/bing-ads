@@ -10,6 +10,7 @@
 
 # rspec failure tracking
 .rspec_status
+.idea/
 
 # built gem files
 *.gem
