@@ -1,0 +1,74 @@
+ad_distribution:
+  search: Search
+  content: Content
+ad_rotation:
+  optimize_for_clicks: OptimizeForClicks
+  rotate_ads_evenly: RotateAdsEvenly
+ad_group_status:
+  draft: Draft
+  active: Active
+  paused: Paused
+  deleted: Deleted
+ad_editorial_status:
+  active: Active
+  disapproved: Disapproved
+  inactive: Inactive
+  active_limited: ActiveLimited
+ad_status:
+  inactive: Inactive
+  active: Active
+  paused: Paused
+  deleted: Deleted
+ad_types:
+  text_ad: TextAd
+  image_ad: ImageAd
+  product_ad: ProductAd
+  app_install_ad: AppInstallAd
+  expanded_text_ad: ExpandedTextAd
+  dynamic_search_ad: DynamicSearchAd
+ad_types_for_get:
+  text: Text
+  image: Image
+  product: Product
+  app_install: AppInstall
+  expanded_text: ExpandedText
+  dynamic_search: DynamicSearch
+bidding_model:
+  keyword: Keyword
+  site_placement: SitePlacement
+bidding_scheme:
+  manual_cpc: ManualCpcBiddingScheme
+  enhanced_cpc: EnhancedCpcBiddingScheme
+  inherit_from_parent: InheritFromParentBiddingScheme
+  max_clicks: MaxClicksBiddingScheme
+  max_conversions: MaxConversionsBiddingScheme
+  target_cpa: TargetCpaBiddingScheme
+budget_limit_type:
+  daily_budget_accelerated: DailyBudgetAccelerated
+  daily_budget_standard: DailyBudgetStandard
+campaign_status:
+  active: Active
+  paused: Paused
+  budget_paused: BudgetPaused
+  budget_and_manual_paused: BudgetAndManualPaused
+  deleted: Deleted
+keyword_editorial_statuses:
+  active: Active
+  disapproved: Disapproved
+  inactive: Inactive
+keyword_statuses:
+  active: Active
+  paused: Paused
+  deleted: Deleted
+  inactive: Inactive
+match_types:
+  broad: Broad
+  exact: Exact
+  phrase: Phrase
+network:
+  owned_and_operated_and_syndicated_search: OwnedAndOperatedAndSyndicatedSearch
+  owned_and_operated_only: OwnedAndOperatedOnly
+  syndicated_search_only: SyndicatedSearchOnly
+remarketing_target_setting:
+  bid_only: BidOnly
+  target_and_bid: TargetAndBid
