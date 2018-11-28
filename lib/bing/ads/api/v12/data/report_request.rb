@@ -8,19 +8,19 @@ module Bing
 
             # @order
             # https://msdn.microsoft.com/en-us/library/bing-ads-reporting-reportrequest.aspx
-            KEYS_ORDER = [
-              :exclude_column_headers,
-              :exclude_report_footer,
-              :exclude_report_header,
-              :format,
-              :language,
-              :report_name,
-              :return_only_complete_data,
-              :aggregation,
-              :columns,
-              :filter,
-              :scope,
-              :time
+            KEYS_ORDER = %i[
+              exclude_column_headers
+              exclude_report_footer
+              exclude_report_header
+              format
+              language
+              report_name
+              return_only_complete_data
+              aggregation
+              columns
+              filter
+              scope
+              time
             ].freeze
 
             class << self
