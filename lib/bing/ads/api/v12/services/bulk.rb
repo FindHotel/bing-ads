@@ -27,7 +27,7 @@ module Bing
               payload = Bing::Ads::API::V12::Data::BulkRequest.prepare(options)
               response = call(__method__, payload)
               response_body = response_body(response, __method__)
-              response_body.slice(:request_id, :download_url)
+              response_body.slice(:download_request_id)
             end
 
             # def download_campaigns_by_campaign_ids(options)

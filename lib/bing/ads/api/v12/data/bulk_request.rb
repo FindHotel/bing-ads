@@ -22,20 +22,11 @@ module Bing
                 )
                 bulk_request_row[:download_entities] =
                   prepare_download_entities(
-                    levels: bulk_request_row.delete(:levels),
+                    levels: bulk_request_row.delete(:levels)
                   )
-                bulk_request_row.execpt!(:levels)
+                bulk_request_row.except!(:levels)
                 bulk_request = Bing::Ads::Utils.sort_keys(bulk_request_row, KEYS_ORDER)
-                namespace_identifier = Bing::Ads::API::V12::NAMESPACE_IDENTIFIER
-                {
-                  get_campaigns_by_account_ids: Bing::Ads::Utils.camelcase_keys(bulk_request),
-                  :attributes! => {
-                    get_campaigns_by_account_ids: {
-                      'xmlns:i' => 'http://www.w3.org/2001/XMLSchema-instance',
-                      'i:type' => "#{namespace_identifier}:GetCampaignsByAccountIds"
-                    }
-                  }
-                }
+                Bing::Ads::Utils.camelcase_keys(bulk_request)
               end
 
               private
@@ -49,9 +40,8 @@ module Bing
 
               def prepare_download_entities(levels:)
                 levels = %w[campaign] if levels.nil? || levels.empty?
-                return levels.map do |e|
-                  Bing::Ads::API::V12.constants.bulk.download_entities.send(e)
-                end
+                entities = levels.map(&:pluralize).map(&:camelcase)
+                { download_entity: entities }
               end
             end
           end
