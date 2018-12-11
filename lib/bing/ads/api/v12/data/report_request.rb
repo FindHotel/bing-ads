@@ -27,7 +27,7 @@ module Bing
               def prepare(type, report_request_raw)
                 report_request_raw[:columns] = prepare_columns(
                   columns: report_request_raw[:columns],
-                  type: type.to_s.classify
+                  type: type.to_s.camelcase
                 )
 
                 report_request_raw[:scope] = prepare_scope(
@@ -48,7 +48,7 @@ module Bing
                   :attributes! => {
                     report_request: {
                       "xmlns:i" => "http://www.w3.org/2001/XMLSchema-instance",
-                      "i:type" => "#{namespace_identifier}:#{type.to_s.classify}ReportRequest"
+                      "i:type" => "#{namespace_identifier}:#{type.to_s.camelcase}ReportRequest"
                     }
                   }
                 }
