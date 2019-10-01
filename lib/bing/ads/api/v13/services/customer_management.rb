@@ -1,9 +1,9 @@
 module Bing
   module Ads
     module API
-      module V12
+      module V13
         module Services
-          # Bing::Ads::API::V12::Services::CustomerManagement
+          # Bing::Ads::API::V13::Services::CustomerManagement
           class CustomerManagement < Base
             def initialize(options = {})
               super(options)
