@@ -1,9 +1,9 @@
 module Bing
   module Ads
     module API
-      module V12
+      module V13
         module Data
-          # Bing::Ads::API::V12::Data::ReportRequest
+          # Bing::Ads::API::V13::Data::ReportRequest
           class ReportRequest
 
             # @order
@@ -42,7 +42,7 @@ module Bing
                 report_request_raw.except!(:from_date, :to_date, :account_ids)
 
                 report_request = Bing::Ads::Utils.sort_keys(report_request_raw, KEYS_ORDER)
-                namespace_identifier = Bing::Ads::API::V12::NAMESPACE_IDENTIFIER
+                namespace_identifier = Bing::Ads::API::V13::NAMESPACE_IDENTIFIER
                 {
                   report_request: Bing::Ads::Utils.camelcase_keys(report_request),
                   :attributes! => {
