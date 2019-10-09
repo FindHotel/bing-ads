@@ -6,5 +6,5 @@ sandbox:
 production:
   customer_management: https://clientcenter.api.bingads.microsoft.com/Api/CustomerManagement/v13/CustomerManagementService.svc?singleWsdl
   campaign_management: "https://campaign.api.bingads.microsoft.com/Api/Advertiser/CampaignManagement/V13/CampaignManagementService.svc?singleWsdl"
-  reporting: "https://api.bingads.microsoft.com/Api/Advertiser/Reporting/V13/ReportingService.svc?singleWsdl"
+  reporting: "https://reporting.api.bingads.microsoft.com/Api/Advertiser/Reporting/V13/ReportingService.svc?singleWsdl"
   bulk: 'https://bulk.api.bingads.microsoft.com/Api/Advertiser/CampaignManagement/V13/BulkService.svc?singleWsdl'
