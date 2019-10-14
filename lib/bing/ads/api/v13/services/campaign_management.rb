@@ -12,7 +12,7 @@ module Bing
             def get_experiments_by_ids(experiments=[])
               account_id ||= @account_id
               payload = {
-                experiment_ids: { 'ins1:long' => experiments }
+                experiment_ids: { 'a1:long' => experiments }
               }
               response = call(:get_experiments_by_ids, payload)
               response_body = response_body(response, __method__)
