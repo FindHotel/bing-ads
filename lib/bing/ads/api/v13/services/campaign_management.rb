@@ -8,6 +8,13 @@ module Bing
             def initialize(options = {})
               super(options)
             end
+            
+            def get_experiments_by_ids(experiments=[])
+              account_id ||= @account_id
+              response = call(:get_experiments_by_ids, experiments: experiments)
+              response_body = response_body(response, __method__)
+              #[response_body[:campaigns][:campaign]].flatten.compact
+            end
 
             def get_campaigns_by_account_id(account_id=nil, campaign_type: "Search")
               account_id ||= @account_id
