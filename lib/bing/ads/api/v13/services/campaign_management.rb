@@ -11,7 +11,10 @@ module Bing
             
             def get_experiments_by_ids(experiments=[])
               account_id ||= @account_id
-              response = call(:get_experiments_by_ids, experiment_ids: experiments)
+              payload = {
+                experiment_ids: { 'ins1:long' => experiments }
+              }
+              response = call(:get_experiments_by_ids, payload)
               response_body = response_body(response, __method__)
               #[response_body[:campaigns][:campaign]].flatten.compact
             end
