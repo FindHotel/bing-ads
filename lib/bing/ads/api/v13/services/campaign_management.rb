@@ -12,7 +12,10 @@ module Bing
             def get_experiments_by_ids(experiments=[])
               account_id ||= @account_id
               payload = {
-                experiment_ids: { 'a1:long' => experiments }
+                experiment_ids: { 
+                  'a1:long' => experiments,
+                  '@xmlns:a1' => 'http://schemas.microsoft.com/2003/10/Serialization/Arrays'
+                }
               }
               response = call(:get_experiments_by_ids, payload)
               response_body = response_body(response, __method__)
