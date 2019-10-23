@@ -1,9 +1,9 @@
 module Bing
   module Ads
     module API
-      module V11
+      module V13
         module Services
-          # Bing::Ads::API::V11::Base
+          # Bing::Ads::API::V13::Base
           class Base
             attr_accessor :soap_client, :environment, :retry_attempts
 
@@ -27,7 +27,7 @@ module Bing
               @customer_id = options[:customer_id]
               raise 'You must set the service environment' unless @environment
               options[:wsdl_url] = service_wsdl_url
-              options[:namespace_identifier] = Bing::Ads::API::V11::NAMESPACE_IDENTIFIER
+              options[:namespace_identifier] = Bing::Ads::API::V13::NAMESPACE_IDENTIFIER
               @soap_client = Bing::Ads::API::SOAPClient.new(options)
             end
 
@@ -112,7 +112,7 @@ module Bing
             #
             # @return String with the Service url
             def service_wsdl_url
-              Bing::Ads::API::V11.constants.wsdl.send(environment).send(service_name)
+              Bing::Ads::API::V13.constants.wsdl.send(environment).send(service_name)
             end
 
             def handle_soap_fault(operation, fault_detail, key)

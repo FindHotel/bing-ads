@@ -1,20 +1,21 @@
 module Bing
   module Ads
     module API
-      module V11
+      module V13
         module Data
-          # Bing::Ads::API::V11::Data::Keyword
+          # Bing::Ads::API::V13::Data::Keyword
           class Keyword
 
             # @order
             # https://msdn.microsoft.com/en-us/library/bing-ads-campaign-management-keyword.aspx
             KEYS_ORDER = [
-              :bidding_scheme,
               :bid,
+              :bidding_scheme,
               :destination_url,
               :editorial_status,
               :final_app_urls,
               :final_mobile_urls,
+              :final_url_suffix,
               :final_urls,
               :forward_compatibility_map,
               :id,
@@ -26,8 +27,7 @@ module Bing
               :text,
               :tracking_url_template,
               :url_custom_parameters
-              # Alphabetical
-            ]
+            ].freeze
 
             def self.prepare(keyword_raw)
               # To use the AdGroup default match type bid,
@@ -37,7 +37,7 @@ module Bing
                 # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
                 keyword_raw[:bidding_scheme] = {
                   type: keyword_raw[:bidding_scheme],
-                  '@xsi:type' => "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{keyword_raw[:bidding_scheme]}"
+                  '@xsi:type' => "#{Bing::Ads::API::V13::NAMESPACE_IDENTIFIER}:#{keyword_raw[:bidding_scheme]}"
                 }
               end
               keyword_raw[:final_mobile_urls] = { 'ins1:string' => keyword_raw[:final_mobile_urls] } if keyword_raw[:final_mobile_urls]
