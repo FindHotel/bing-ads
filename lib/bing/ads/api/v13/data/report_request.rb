@@ -1,33 +1,32 @@
 module Bing
   module Ads
     module API
-      module V11
+      module V13
         module Data
-          # Bing::Ads::API::V11::Data::ReportRequest
+          # Bing::Ads::API::V13::Data::ReportRequest
           class ReportRequest
 
             # @order
             # https://msdn.microsoft.com/en-us/library/bing-ads-reporting-reportrequest.aspx
-            KEYS_ORDER = [
-              :exclude_column_headers,
-              :exclude_report_footer,
-              :exclude_report_header,
-              :format,
-              :language,
-              :report_name,
-              :return_only_complete_data,
-              :aggregation,
-              :columns,
-              :filter,
-              :scope,
-              :time
-            ]
+            KEYS_ORDER = %i[
+              exclude_column_headers
+              exclude_report_footer
+              exclude_report_header
+              format
+              report_name
+              return_only_complete_data
+              aggregation
+              columns
+              filter
+              scope
+              time
+            ].freeze
 
             class << self
               def prepare(type, report_request_raw)
                 report_request_raw[:columns] = prepare_columns(
                   columns: report_request_raw[:columns],
-                  type: type.to_s.classify
+                  type: type.to_s.camelcase
                 )
 
                 report_request_raw[:scope] = prepare_scope(
@@ -42,13 +41,13 @@ module Bing
                 report_request_raw.except!(:from_date, :to_date, :account_ids)
 
                 report_request = Bing::Ads::Utils.sort_keys(report_request_raw, KEYS_ORDER)
-                namespace_identifier = Bing::Ads::API::V11::NAMESPACE_IDENTIFIER
+                namespace_identifier = Bing::Ads::API::V13::NAMESPACE_IDENTIFIER
                 {
                   report_request: Bing::Ads::Utils.camelcase_keys(report_request),
                   :attributes! => {
                     report_request: {
                       "xmlns:i" => "http://www.w3.org/2001/XMLSchema-instance",
-                      "i:type" => "#{namespace_identifier}:#{type.to_s.classify}ReportRequest"
+                      "i:type" => "#{namespace_identifier}:#{type.to_s.camelcase}ReportRequest"
                     }
                   }
                 }

@@ -1,16 +1,16 @@
 module Bing
   module Ads
     module API
-      module V11
+      module V13
         module Services
-          # Bing::Ads::API::V11::Services::CampaignManagement
+          # Bing::Ads::API::V13::Services::CampaignManagement
           class Reporting < Base
             def initialize(options = {})
               super(options)
             end
 
             def submit_generate_report(type, report_options)
-              payload = Bing::Ads::API::V11::Data::ReportRequest.prepare(type, report_options)
+              payload = Bing::Ads::API::V13::Data::ReportRequest.prepare(type, report_options)
               response = call(:submit_generate_report, payload)
               response_body = response_body(response, __method__)
               response_body
@@ -35,6 +35,9 @@ module Bing
             end
 
             def report_body(report_request_id)
+              report_url = report_url(report_request_id)
+              return if report_url.nil?
+
               HttpClient.download(report_url(report_request_id))
             end
 

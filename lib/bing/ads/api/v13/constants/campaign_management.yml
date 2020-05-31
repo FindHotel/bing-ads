@@ -52,9 +52,6 @@ campaign_status:
   budget_paused: BudgetPaused
   budget_and_manual_paused: BudgetAndManualPaused
   deleted: Deleted
-pricing_model:
-  cpc: Cpc
-  cpm: Cpm
 keyword_editorial_statuses:
   active: Active
   disapproved: Disapproved
@@ -66,7 +63,6 @@ keyword_statuses:
   inactive: Inactive
 match_types:
   broad: Broad
-  content: Content
   exact: Exact
   phrase: Phrase
 network:

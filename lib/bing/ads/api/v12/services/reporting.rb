@@ -35,6 +35,9 @@ module Bing
             end
 
             def report_body(report_request_id)
+              report_url = report_url(report_request_id)
+              return if report_url.nil?
+
               HttpClient.download(report_url(report_request_id))
             end
 
