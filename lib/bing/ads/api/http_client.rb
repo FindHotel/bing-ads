@@ -7,7 +7,12 @@ module Bing
 
         def self.download(url, retry_count = API_CALL_RETRY_COUNT)
           1.upto(retry_count + 1) do |retry_index|
-            response = Net::HTTP.get_response(URI(url))
+            http = Net::HTTP.new(URI(url))
+            http.use_ssl = true
+            http.ssl_version = :TLSv1
+            http.ciphers = ['RC4-SHA']
+            http.get(uri.request_uri)
+            response = http.get_response(URI(url))
             if response.is_a?(Net::HTTPSuccess)
               break response.body
             else
