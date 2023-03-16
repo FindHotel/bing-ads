@@ -13,6 +13,7 @@ module Bing
               exclude_report_footer
               exclude_report_header
               format
+              format_version
               report_name
               return_only_complete_data
               aggregation
