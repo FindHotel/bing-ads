@@ -1,23 +1,25 @@
 module Bing
   module Ads
     module API
-      module V11
+      module V13
         module Data
-          # Bing::Ads::API::V11::Data::Campaign
+          # Bing::Ads::API::V13::Data::Campaign
           class Campaign
 
             # @order
             # https://msdn.microsoft.com/en-us/library/bing-ads-campaign-management-campaign.aspx
             KEYS_ORDER = [
+              :audience_bid_adjustment,
               :bidding_scheme,
               :budget_type,
               :daily_budget,
-              :description,
+              :experiment_id,
+              :final_suffix_url,
               :forward_compatibility_map,
               :id,
               :name,
-              :native_bid_adjustment,
               :status,
+              :sub_type,
               :time_zone,
               :tracking_url_template,
               :url_custom_parameters,
@@ -26,14 +28,14 @@ module Bing
               :settings,
               :budget_id,
               :languages
-            ]
+            ].freeze
 
             def self.prepare(campaign_raw)
               if campaign_raw[:bidding_scheme]
                 campaign_raw[:bidding_scheme] = {
                   # TODO support MaxClicksBiddingScheme, MaxConversionsBiddingScheme and TargetCpaBiddingScheme
                   type: campaign_raw[:bidding_scheme],
-                  '@xsi:type' => "#{Bing::Ads::API::V11::NAMESPACE_IDENTIFIER}:#{campaign_raw[:bidding_scheme]}"
+                  '@xsi:type' => "#{Bing::Ads::API::V13::NAMESPACE_IDENTIFIER}:#{campaign_raw[:bidding_scheme]}"
                 }
               end
               # TODO UrlCustomParameters

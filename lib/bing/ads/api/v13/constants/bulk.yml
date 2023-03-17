@@ -1,0 +1,5 @@
+download_entities:
+  campaigns: 1
+  ad_groups: 2
+  ads: 3
+  keywords: 4
